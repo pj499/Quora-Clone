@@ -1,2 +1,1 @@
-./quora-apis/node_modules
-./quora-clone/node_modules
+**/node_modules
