@@ -68,8 +68,11 @@ function SignUp(props) {
       },
       body: JSON.stringify(dataToSubmit)
     })
-    console.log('response :', response)
+    const response2= await response.json();
+
     if(response.status== 200){
+      localStorage.setItem('userId', response2.userId);
+      console.log('local', localStorage.getItem("userId"))
       props.onNextClick();
     }
     if(response.status== 409){

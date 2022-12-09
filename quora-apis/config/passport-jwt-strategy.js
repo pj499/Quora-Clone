@@ -5,7 +5,7 @@ const ExtractJWT= require('passport-jwt').ExtractJwt;
 
 var options={
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'quora'
+    secretOrKey: 'quora-clone'
 }
 
 passport.use(new JWTStrategy(options, function(jwt_payload, done){

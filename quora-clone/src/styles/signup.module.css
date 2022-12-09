@@ -61,3 +61,30 @@
     outline: none;
     padding-left: 15px; 
 }
+
+.resendotp{
+    text-decoration: none;
+    color: grey;
+    cursor: pointer;
+    transition: 1s ease-in-out;
+    position: relative;
+  }
+  .resendotp:after {    
+    background: none repeat scroll 0 0 transparent;
+    content: "";
+    display: block;
+    height: 1px;
+    left: 50%;
+    position: absolute;
+    background: black;
+    transition: width 0.5s ease 0s, left 0.5s ease 0s;
+    width: 0;
+  }
+  .resendotp:hover:after { 
+    width: 100%; 
+    left: 0; 
+    color: black;
+  }
+  .resendotp:hover{
+    color: black;
+  }

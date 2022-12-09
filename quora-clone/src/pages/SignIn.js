@@ -4,11 +4,12 @@ import logo from "../assets/images/logo.png";
 import googleLogin from "../assets/images/googleLogin.png";
 import SignUp from "../componets/Signup";
 import VerifyEmail from "../componets/VerifyEmail";
+import Password from "../componets/Password";
 
 function SignIn ()  {
   const [showSignUp, setShowSignUp] = useState(false);
   const [isNextSignUp, setIsNextSignUp] = useState(false);
-
+  const [showPassword, setShowPassword]= useState(false);
 
   function handleCloseSignUp (){
     setShowSignUp(false);
@@ -21,15 +22,21 @@ function SignIn ()  {
     setShowSignUp(false);
     setIsNextSignUp(true);
   }
-  function handleCloseVerifyEmail(){
+  function nextVerifyEmail(){
+    setIsNextSignUp(false);
+    setShowSignUp(false);
+    setShowPassword(true);
   }
+
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
     return (
       <>
       {showSignUp && <SignUp onNextClick={handleIsNextSignUp} onSignUpClose={handleCloseSignUp}/>}
-      {isNextSignUp && <VerifyEmail onClose={handleCloseVerifyEmail} onNextClick={handleCloseVerifyEmail}/>}
+      {isNextSignUp && <VerifyEmail onClose={handleCloseVerifyEmail} onNextClick={nextVerifyEmail}/>}
+      {showPassword && <Password/>}
       <div className={styles.Outer}>
         <div className={styles.loginContainer}>
           <div className={styles.title}>

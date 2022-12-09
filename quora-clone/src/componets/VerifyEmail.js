@@ -5,7 +5,6 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import styles from "../styles/signup.module.css";
 import {toast} from 'react-toastify'
-import userId from "../scratch/userId";
 
 const VerifyEmail = (props) => {
 
@@ -14,6 +13,17 @@ const VerifyEmail = (props) => {
   const [isOTPValid, setIsOTPValid]= useState(false);
   const [isOTPBlank, setIsOTPBlank]= useState(true);
   const [otpValidMessage, setOtpValidMessage] = useState("");
+  var toastInfo= {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+    };
+
   
   function handleOtp(otp){
     setOtp(otp);
@@ -48,7 +58,7 @@ const VerifyEmail = (props) => {
     
     const url= 'http://localhost:8000/verifyOtp';
     const dataToSubmit={
-      userId: userId,
+      userId: localStorage.getItem('userId'),
       otp: otp
     }
     const response= await fetch(url, {
@@ -58,32 +68,26 @@ const VerifyEmail = (props) => {
       },
       body: JSON.stringify(dataToSubmit)
     })
-    console.log('response :', response)
-
+    
     if(response.status== 200){
+      toast.success('Email is verified successfully!', toastInfo)
       props.onNextClick();
     }
-    if(response.status== 409){
-      toast.error('Incorrect OTP!', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
-        e.target[0].value="";
+    if(response.status== 401){
+      setIsSubmit(false)
+      toast.warning('OTP has been expired! Please click on Resend code', toastInfo)
+      e.target[0].value="";
+    }
+    if(response.status== 404){
+      setIsSubmit(false)
+      toast.error('Incorrect OTP!', toastInfo);
+      e.target[0].value="";
     }
   }
   
   useEffect(() => {
     handleOtp(otp);
   }, [otp,isSubmit])
-  
-  localStorage.setItem('userId', userId);
-  console.log('local', localStorage.getItem("userId"))
   
   return (
     <>
@@ -117,14 +121,15 @@ const VerifyEmail = (props) => {
              {otpValidMessage}
               </div> :null}
             </div>
-            <p style={{textAlign: 'left', fontSize:'smaller', marginTop:'20px'}}>Didn't receive an email or something went wrong? Resend code</p>
+            <p style={{textAlign: 'left', fontSize:'smaller', marginTop:'20px'}}>Didn't receive an email or something went wrong? &nbsp;
+            <a href='' className={styles.resendotp} >Resend code</a>
+            </p>
 
             <div style={{ width: '100%', borderBottom: '1px solid lightGray', marginTop: '90px'}}>
 
             </div>
             <button type="submit" className={signinStyles.formLoginButton} disabled={!isSubmit}
             style={{width: '15%', marginTop: '10px', position: 'relative', left: '40%'}}
-            onClick={props.onNextClick}
             >
               Submit
             </button>
