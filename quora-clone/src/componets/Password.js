@@ -28,8 +28,10 @@ const Password = (props) => {
   const handleSubmit=async(e)=>{
     e.preventDefault();
     
-    const url= 'http://localhost:8000/verifyOtp';
+    const url= 'http://localhost:8000/setPassword';
     const dataToSubmit={
+      userId:localStorage.getItem('userId'),
+      password:password
     }
     const response= await fetch(url, {
       method: 'POST',
@@ -40,17 +42,16 @@ const Password = (props) => {
     })
     
     if(response.status== 200){
-      toast.success('Email is verified successfully!', toastInfo)
-      props.onNextClick();
+      toast.success('Account Created successfully! Please login to continue.', toastInfo)
+      localStorage.removeItem('userId')
+      props.onPasswordClose();
     }
-    if(response.status== 401){
-      toast.warning('OTP has been expired! Please click on Resend code', toastInfo)
-    }
-    if(response.status== 404){
-      toast.error('Incorrect OTP!', toastInfo);
-      e.target[0].value="";
+    if(response.status== 400){
+      toast.error('Error in creating user! Please try again after sometime.', toastInfo)
+      props.onPasswordClose();
     }
   }
+
   useEffect(() => {
   }, [password, isPasswordValid])
   

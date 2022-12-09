@@ -85,6 +85,33 @@ const VerifyEmail = (props) => {
     }
   }
   
+  const handleResendOtp=async(e)=>{
+    e.preventDefault();
+    
+    const url= 'http://localhost:8000/resendOtp';
+    const dataToSubmit={
+      userId: localStorage.getItem('userId'),
+    }
+
+    const response= await fetch(url, {
+      method: 'POST',
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(dataToSubmit)
+    })
+    
+    if(response.status== 200){
+      toast.success('Please check your mail for new otp!', toastInfo)
+      e.target[0].value="";
+    }
+    if(response.status== 400){
+      setIsSubmit(false)
+      toast.warning('Error in sending otp. Please try again after sometime', toastInfo)
+      e.target[0].value="";
+    }
+  }
+
   useEffect(() => {
     handleOtp(otp);
   }, [otp,isSubmit])
@@ -122,7 +149,7 @@ const VerifyEmail = (props) => {
               </div> :null}
             </div>
             <p style={{textAlign: 'left', fontSize:'smaller', marginTop:'20px'}}>Didn't receive an email or something went wrong? &nbsp;
-            <a href='' className={styles.resendotp} >Resend code</a>
+            <a href='' className={styles.resendotp} onClick={handleResendOtp}>Resend code</a>
             </p>
 
             <div style={{ width: '100%', borderBottom: '1px solid lightGray', marginTop: '90px'}}>
