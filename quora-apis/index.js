@@ -7,12 +7,12 @@ const db = require("./config/mongoose");
 const nodemailer = require("./config/nodemailer");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const cookies= require('cookie-parser');
+const cookieParser= require('cookie-parser');
 
-app.use(cors());
-app.use(cookies());
+app.use(cors({credentials:true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use("/", require("./routes"));
 app.listen(port, function (e) {
   if (e) {
