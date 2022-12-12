@@ -5,6 +5,7 @@ const Otp = require('../../models/otp');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+
 async function sendEmail(res, user) {
     //To generate OTP for user email verification
     let otp = otpGenerator.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false })
@@ -148,12 +149,16 @@ module.exports.setPassword = async function (req, res) {
 }
 
 module.exports.login = async function (req, res) {
+    console.log('inside login');
     try {
+        
         let reqEmail = req.body.email;
         let reqPassword = req.body.password;
-
+        console.log('reqEmail and pass', reqEmail, " ", reqPassword);
         //find user by email
         let user = await User.findOne({email:reqEmail});
+
+        //TODO: if user is not verified
 
         //could not find user
         if(!user){
@@ -162,8 +167,12 @@ module.exports.login = async function (req, res) {
             });
         }
 
+        console.log('inside login USER', user);
+
         //comparing password
         let passwordChecker = await bcrypt.compare(reqPassword,user.password);
+
+        console.log('passwordchecker', passwordChecker);
 
         if(!passwordChecker){
             return res.status(400).send({
@@ -172,13 +181,67 @@ module.exports.login = async function (req, res) {
         }
 
         //generate jwt token
-        let token = jwt.sign(user.toJSON,'quora-clone',{expiresIn:'744h'});
-        console.log("token: ",token);
+        let accessToken = jwt.sign({email: user.email},'quora-clone-access',{expiresIn:'15s'});
+        let refreshToken = jwt.sign({email: user.email}, 'quora-clone-refresh');
+
         return res.status(200).send({
             message:'Logged in successfully.',
-            token:token
+            accessToken: accessToken,
+            refreshToken: refreshToken
         })
     } catch (error) {
+        res.send(400, {
+            message: `Error in login ${error}`
+        })
+        console.log('Error in login: ', error);
+        return;
+    }
+}
 
+module.exports.verifyTokenMiddleware= function(req, res, next){
+    try {
+        let refreshToken= req.headers.refreshtoken;
+        // console.log('refreshtoken in middleware', refreshToken);
+        if(refreshToken==null){
+            return res.send(403, {
+                message: 'Forbidden'
+            })
+        }
+        
+        jwt.verify(refreshToken, 'quora-clone-refresh', (err, user)=> {
+            if(err){
+                console.log('Refershtoken is faulty:', err)
+
+                return res.status(403).send( {
+                    message: 'Forbidden'
+                })
+            }else{
+                let accessToken= jwt.sign({email: user.email},'quora-clone-access',{expiresIn:'15s'});
+                res.json({accessToken: accessToken});
+                
+            }
+            
+        })
+        
+    } catch (error) {
+        res.status(400).send( {
+            message: `Error in verifyTokenMiddleware ${error}`
+        })
+        console.log('Error in verifyTokenMiddleware: ', error);
+        return;
+    }
+}
+
+module.exports.test= function(req, res){
+    try {
+        return res.status(200).send({
+            message:'tested successfully.'
+        })
+    } catch (error) {
+        res.send(400, {
+            message: `Error in test ${error}`
+        })
+        console.log('Error in test: ', error);
+        return;
     }
 }

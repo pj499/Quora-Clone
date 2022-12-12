@@ -9,5 +9,9 @@ router.post('/verifyOtp', authentication.verifyOtp);
 router.post('/resendOtp',authentication.resendOtp);
 router.post('/setPassword',authentication.setPassword);
 router.post('/login',authentication.login);
+router.post('/test',authentication.verifyTokenMiddleware,authentication.test);
+
+
+
 
 module.exports= router;

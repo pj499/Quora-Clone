@@ -40,7 +40,6 @@ const Password = (props) => {
       },
       body: JSON.stringify(dataToSubmit)
     })
-    
     if(response.status== 200){
       toast.success('Account Created successfully! Please login to continue.', toastInfo)
       localStorage.removeItem('userId')

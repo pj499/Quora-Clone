@@ -65,7 +65,7 @@ function SignIn() {
       email: email,
       password: password
     }
-    const response = await fetch(url, {
+    let response = await fetch(url, {
       method: 'POST',
       headers: {
         "Content-type": "application/json",
@@ -73,11 +73,17 @@ function SignIn() {
       body: JSON.stringify(dataToSubmit)
     })
 
-    response=await response.json();
-    console.log("response: ",response);
+    let responseJSON=await response.json();
 
     if(response.status==200){
       toast.success("Logged In Successfully!",toastInfo);
+      let accessToken= responseJSON.accessToken;
+      let refreshToken= responseJSON.refreshToken;
+
+      localStorage.setItem('access-token', accessToken);
+      localStorage.setItem('refresh-token', refreshToken);
+
+
       navigate('/home')
     }else{
       toast.error("Invalid Username/Password!",toastInfo);
