@@ -34,7 +34,6 @@ function SignUp(props) {
     }
   }
   function handleEmail(email){
-    // console.log('email in handler: ',email);
     setEmail(email);
     if(validator.isEmail(email)){
       setIsEmailValid(true);
@@ -72,7 +71,6 @@ function SignUp(props) {
 
     if(response.status== 200){
       localStorage.setItem('userId', response2.userId);
-      console.log('local', localStorage.getItem("userId"))
       props.onNextClick();
     }
     if(response.status== 409){
