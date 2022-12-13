@@ -29,9 +29,12 @@ function HomePage(){
           method: 'POST',
           headers: {
             "Content-type": "application/json",
+            'Access-Control-Allow-Origin': 'http://localhost:3000',
+            'Access-Control-Allow-Credentials': 'true',
             accessToken: localStorage.getItem('access-token'),
             refreshToken: localStorage.getItem('refresh-token')
           },
+          credentials: 'include',
           body: JSON.stringify(dataToSubmit)
         })
         

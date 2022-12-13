@@ -8,11 +8,15 @@ const nodemailer = require("./config/nodemailer");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const cookies= require('cookie-parser');
+const { session } = require("passport");
 
-app.use(cors());
+app.use(cors({
+  credentials: true
+}));
 app.use(cookies());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use("/", require("./routes"));
 app.listen(port, function (e) {
   if (e) {

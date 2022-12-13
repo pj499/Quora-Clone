@@ -184,10 +184,17 @@ module.exports.login = async function (req, res) {
         let accessToken = jwt.sign({email: user.email},'quora-clone-access',{expiresIn:'15s'});
         let refreshToken = jwt.sign({email: user.email}, 'quora-clone-refresh');
 
+        res.cookie('refershToken', refreshToken, {
+            
+        })
         return res.status(200).send({
             message:'Logged in successfully.',
             accessToken: accessToken,
-            refreshToken: refreshToken
+            refreshToken: refreshToken,
+            headers:{
+                'Access-Control-Allow-Origin': 'http://localhost:3000',
+                'Access-Control-Allow-Credentials': 'true',
+            }
         })
     } catch (error) {
         res.send(400, {
@@ -201,7 +208,7 @@ module.exports.login = async function (req, res) {
 module.exports.verifyTokenMiddleware= function(req, res, next){
     try {
         let refreshToken= req.headers.refreshtoken;
-        // console.log('refreshtoken in middleware', refreshToken);
+        console.log('cutessss cookie', req.cookies);
         if(refreshToken==null){
             return res.send(403, {
                 message: 'Forbidden'
@@ -213,7 +220,11 @@ module.exports.verifyTokenMiddleware= function(req, res, next){
                 console.log('Refershtoken is faulty:', err)
 
                 return res.status(403).send( {
-                    message: 'Forbidden'
+                    message: 'Forbidden',
+                    headers:{
+                        'Access-Control-Allow-Origin': 'http://localhost:3000',
+                        'Access-Control-Allow-Credentials': 'true',
+                    }
                 })
             }else{
                 let accessToken= jwt.sign({email: user.email},'quora-clone-access',{expiresIn:'15s'});
@@ -235,7 +246,11 @@ module.exports.verifyTokenMiddleware= function(req, res, next){
 module.exports.test= function(req, res){
     try {
         return res.status(200).send({
-            message:'tested successfully.'
+            message:'tested successfully.',
+            headers:{
+                'Access-Control-Allow-Origin': 'http://localhost:3000',
+                'Access-Control-Allow-Credentials': 'true',
+            }
         })
     } catch (error) {
         res.send(400, {
