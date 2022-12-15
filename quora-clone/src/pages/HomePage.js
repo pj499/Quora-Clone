@@ -10,7 +10,6 @@ function HomePage() {
 
   const [temp, setTemp] = useState('')
   const auth = useAuth();
-  console.log("auth in home:", auth)
   let navigate = useNavigate();
   var toastInfo = {
     position: "top-center",
@@ -23,40 +22,32 @@ function HomePage() {
     theme: "dark",
   };
 
-  // const handleTest = async (e) => {
-  //   e.preventDefault();
-
-  //   const url = 'http://localhost:8000/test';
-  //   const dataToSubmit = {
-  //     temp: temp
-  //   }
-  //   let response = await fetch(url, {
-  //     method: 'POST',
-  //     headers: {
-  //       "Content-type": "application/json",
-  //       accessToken: localStorage.getItem('access-token'),
-  //     },
-  //     withCredentials: true,
-  //     body: JSON.stringify(dataToSubmit)
-  //   })
-  //   let responseJSON = await response.json();
-  //   if (response.status == 200) {
-  //     toast.success("Test successful!", toastInfo);
-  //   }
-  //   if (response.status == 401) {
-  //     toast.error('User Logged Out', toastInfo);
-  //     navigate('/');
-  //   }
-  // }
-  useEffect(() => {
-    if (!auth.isLoggedIn) {
-      navigate('/');
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    let response =await auth.logout();
+    console.log("handlelogout",response)
+    if (response.status == 200) {
+      toast.success("User logged out!", toastInfo);
+      navigate('/')
+      return;
+    }else{
+      toast.error("Error in logging out user.",toastInfo)
     }
-  },[])
-  if (!auth.isLoggedIn) {
-    console.log("User logged out")
-    toast.info("User Logged Out", toastInfo);
   }
+  useEffect(() => {
+    console.log(auth)
+    const verifyUser = async () => {
+      let verifyToken =await  auth.verifyToken();
+      if(verifyToken.status!=200){
+        console.log("User logged out")
+        await auth.logout();
+        toast.info("User Logged Out", toastInfo);
+        navigate('/')
+      }
+    }
+    verifyUser();
+  })
+
   if (auth.loading) {
     return <h1>Wait for cutesss!!</h1>
   } else {
@@ -65,9 +56,9 @@ function HomePage() {
         <h1>{auth.user.email}</h1>
 
 
-        <form >
+        <form onSubmit={handleLogout}>
           <input type='text' onChange={(e) => setTemp(e.target.value)}></input>
-          <button type="submit">Test</button>
+          <button type="submit">Logout</button>
         </form>
 
       </div>

@@ -1,5 +1,5 @@
 import { useState, useContext } from "react"
-import { userLogin } from "../utility";
+import { userLogin, userLogout, verifyUserToken } from "../utility";
 import { AuthContext } from "../provider/AuthProvider";
 import jwtDecode from "jwt-decode";
 import { useEffect } from "react";
@@ -8,46 +8,63 @@ import { useEffect } from "react";
 export const useProvideAuth = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     useEffect(() => {
         const userToken = localStorage.getItem('access-token');
         console.log("userToken: ", userToken);
         if (userToken) {
             const user = jwtDecode(userToken);
-            console.log('user: ', user);
-            console.log("date now:", Date.now())
-            let currentDate = Date.now();
-            console.log((new Date(currentDate).toString() < new Date(user.exp).toString()));
-            if (new Date(currentDate).toString() < new Date(user.exp).toString()) {
-                setUser(user);
-                setIsLoggedIn(true);
-            } else {
-                setUser(null);
-                setIsLoggedIn(false);
-                localStorage.removeItem('access-token');
-            }
+            setUser(user);
         }
         setLoading(false);
     }, []);
     const login = async (email, password) => {
+        console.log("inside hooks login")
         const response = await userLogin(email, password);
         const responseJson = await response.json();
+
         if (response.status == 200) {
             setUser(responseJson.user);
             responseJson.status = 200;
         } else {
             responseJson.status = 400;
         }
+        console.log("responseJson",responseJson)
         setLoading(false);
-        setIsLoggedIn(true);
         return responseJson;
     }
-
+    const logout = async ()=>{
+        const response = await userLogout();
+        const responseJson = await response.json();
+        console.log("hooks logout: ",responseJson);
+        if(response.status==200){
+            setUser(null);
+            localStorage.removeItem('access-token');
+            responseJson.status=200;
+        }else{
+            responseJson.status=400;
+        }
+        setLoading(false);
+        return responseJson;
+    }
+    const verifyToken = async ()=>{
+        const response = await verifyUserToken();
+        const responseJson = await response.json();
+        if(response.status!=200){
+            setUser(null);
+            localStorage.removeItem('access-token');
+            responseJson.status=400;
+        }else{
+            responseJson.status=200;
+        }
+        setLoading(false);
+        return responseJson
+    }
     return {
         user,
         loading,
         login,
-        isLoggedIn
+        logout,
+        verifyToken
     }
 };
 

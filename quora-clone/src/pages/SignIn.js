@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import {Navigate} from 'react-router-dom'
 import styles from "../styles/Signin.module.css";
 import logo from "../assets/images/logo.png";
 import googleLogin from "../assets/images/googleLogin.png";
@@ -19,7 +20,8 @@ function SignIn() {
   const [isLogin, setIsLogin] = useState(false);
   let navigate=useNavigate();
   const auth = useAuth();
-  console.log("auth: ",auth);
+
+  
 
   var toastInfo= {
     position: "top-center",
@@ -58,6 +60,11 @@ function SignIn() {
   }
 
   useEffect(() => {
+    console.log(auth)
+    if(localStorage.getItem('access-token')){
+      console.log("inside signin useeffect");
+      navigate('/home')
+    }
     (email != "" && password != "") ? setIsLogin(true) : setIsLogin(false);
   }, [email, password, isLogin]);
 
@@ -65,8 +72,7 @@ function SignIn() {
     e.preventDefault();
 
     let response = await auth.login(email,password)
-    console.log("response: ",response);
-
+    console.log("response",response);
     if(response.status==200){
       toast.success("Logged In Successfully!",toastInfo);
       let accessToken= response.accessToken;
