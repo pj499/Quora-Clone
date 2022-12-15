@@ -78,12 +78,7 @@ function SignIn() {
     if(response.status==200){
       toast.success("Logged In Successfully!",toastInfo);
       let accessToken= responseJSON.accessToken;
-      let refreshToken= responseJSON.refreshToken;
-
       localStorage.setItem('access-token', accessToken);
-      localStorage.setItem('refresh-token', refreshToken);
-
-
       navigate('/home')
     }else{
       toast.error("Invalid Username/Password!",toastInfo);

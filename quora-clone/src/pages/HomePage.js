@@ -1,11 +1,13 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import {toast} from 'react-toastify'
 
 function HomePage(){
 
 
     const [temp, setTemp] = useState('')
+    let navigate=useNavigate();
     var toastInfo= {
         position: "top-center",
         autoClose: 5000,
@@ -20,7 +22,6 @@ function HomePage(){
     const handleTest = async (e) => {
         e.preventDefault();
     
-        console.log(localStorage.getItem('access-token'))
         const url = 'http://localhost:8000/test';
         const dataToSubmit = {
           temp: temp
@@ -29,21 +30,18 @@ function HomePage(){
           method: 'POST',
           headers: {
             "Content-type": "application/json",
-            'Access-Control-Allow-Origin': 'http://localhost:3000',
-            'Access-Control-Allow-Credentials': 'true',
             accessToken: localStorage.getItem('access-token'),
-            refreshToken: localStorage.getItem('refresh-token')
           },
-          credentials: 'include',
+          withCredentials:true,
           body: JSON.stringify(dataToSubmit)
         })
-        
         let responseJSON= await response.json();
-        localStorage.setItem('access-token', responseJSON.accessToken)
         if(response.status==200){
           toast.success("Test successful!",toastInfo);
-        }else{
-          toast.error("Invalid test!",toastInfo);
+        }
+        if(response.status==401){
+          toast.error('User Logged Out',toastInfo);
+          navigate('/');
         }
       }
 
