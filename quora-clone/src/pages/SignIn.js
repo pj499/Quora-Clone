@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import {Navigate} from 'react-router-dom'
 import styles from "../styles/Signin.module.css";
 import logo from "../assets/images/logo.png";
 import googleLogin from "../assets/images/googleLogin.png";
@@ -7,6 +8,8 @@ import SignUp from "../componets/Signup";
 import VerifyEmail from "../componets/VerifyEmail";
 import Password from "../componets/Password";
 import {toast} from 'react-toastify'
+import { login } from "../utility";
+import { useAuth } from "../hooks";
 
 function SignIn() {
   const [showSignUp, setShowSignUp] = useState(false);
@@ -16,6 +19,9 @@ function SignIn() {
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(false);
   let navigate=useNavigate();
+  const auth = useAuth();
+
+  
 
   var toastInfo= {
     position: "top-center",
@@ -54,30 +60,22 @@ function SignIn() {
   }
 
   useEffect(() => {
+    console.log(auth)
+    if(localStorage.getItem('access-token')){
+      console.log("inside signin useeffect");
+      navigate('/home')
+    }
     (email != "" && password != "") ? setIsLogin(true) : setIsLogin(false);
   }, [email, password, isLogin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = 'http://localhost:8000/login';
-    const dataToSubmit = {
-      email: email,
-      password: password
-    }
-    let response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(dataToSubmit)
-    })
-
-    let responseJSON=await response.json();
-
+    let response = await auth.login(email,password)
+    console.log("response",response);
     if(response.status==200){
       toast.success("Logged In Successfully!",toastInfo);
-      let accessToken= responseJSON.accessToken;
+      let accessToken= response.accessToken;
       localStorage.setItem('access-token', accessToken);
       navigate('/home')
     }else{

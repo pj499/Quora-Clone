@@ -10,6 +10,8 @@ router.post('/resendOtp',authentication.resendOtp);
 router.post('/setPassword',authentication.setPassword);
 router.post('/login',authentication.login);
 router.post('/test',authentication.verifyTokenMiddleware,authentication.test);
+router.get('/logout',authentication.logout);
+router.get('/verifyToken',authentication.verifyTokenMiddleware);
 
 
 

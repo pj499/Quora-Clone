@@ -155,7 +155,7 @@ module.exports.login = async function (req, res) {
         console.log('reqEmail and pass', reqEmail, " ", reqPassword);
         //find user by email
         let user = await User.findOne({email:reqEmail});
-
+     
         //TODO: if user is not verified
 
         //could not find user
@@ -167,8 +167,7 @@ module.exports.login = async function (req, res) {
 
 
         //comparing password
-        let passwordChecker = await bcrypt.compare(reqPassword,user.password);
-
+        let passwordChecker = await  bcrypt.compare(reqPassword,user.password);
 
         if(!passwordChecker){
             return res.status(400).send({
@@ -177,13 +176,18 @@ module.exports.login = async function (req, res) {
         }
 
         //generate jwt token
-        let accessToken = jwt.sign({email: user.email},'quora-clone-access',{expiresIn:'31d'});
+        let accessToken = jwt.sign({email: user.email,name:user.name,userId:user._id},'quora-clone-access',{expiresIn:'31d'});
         user.token = accessToken;
-        user.tokenExpiry=Date.now()+5000;
+        user.tokenExpiry=Date.now()+31*24*60*60*1000;
         user.save();
         return res.status(200).send({
             message:'Logged in successfully.',
-            accessToken: accessToken
+            accessToken: accessToken,
+            user:{
+                name:user.name,
+                email:user.email,
+                userId:user._id
+            }
         })
     } catch (error) {
         res.send(400, {
@@ -196,8 +200,8 @@ module.exports.login = async function (req, res) {
 
 module.exports.verifyTokenMiddleware= function(req, res, next){
     try {
-        console.log("cuees")
         let accessToken= req.headers.accesstoken;
+        
         
         // console.log('refreshtoken in middleware', refreshToken);
         if(accessToken==null){
@@ -207,14 +211,15 @@ module.exports.verifyTokenMiddleware= function(req, res, next){
         }
         
         jwt.verify(accessToken, 'quora-clone-access',async (err, user)=> {
-            console.log("user",user)
             let dbUser = await User.findOne({email:user.email});
             let date = Date.now()
             if(dbUser.tokenExpiry<=date){
                 return res.status(401).send({
                     message:"User logged out."
                 })
-            } 
+            }else{
+                return res.status(200);
+            }
         })
         
     } catch (error) {
@@ -240,6 +245,33 @@ module.exports.test= function(req, res){
             message: `Error in test ${error}`
         })
         console.log('Error in test: ', error);
+        return;
+    }
+}
+
+module.exports.logout = async function(req,res){
+    try {
+        let accessToken = req.headers.accesstoken;
+
+        jwt.verify(accessToken, 'quora-clone-access',async (err, user)=> {
+            if(err){
+                return res.status(401).send({
+                    message:'Error in logging user out.'
+                })
+            }
+            let dbUser = await User.findOne({email:user.email});
+            dbUser.token=null;
+            dbUser.tokenExpiry=null;
+            dbUser.save();
+            return res.status(200).send({
+                message:"User logged out successfully."
+            })
+        })
+    } catch (error) {
+        res.status(400).send({
+            message: `Error in logging out user.`
+        })
+        console.log('Error in verifyTokenMiddleware: ', error);
         return;
     }
 }
