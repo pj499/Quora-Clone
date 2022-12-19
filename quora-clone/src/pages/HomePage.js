@@ -40,12 +40,14 @@ function HomePage() {
       let verifyToken =await  auth.verifyToken();
       if(verifyToken.status!=200){
         console.log("User logged out")
-        await auth.logout();
-        toast.info("User Logged Out", toastInfo);
         navigate('/')
+        // await auth.logout();
+        toast.info("Session Expired. Please login again.", toastInfo);
       }
     }
-    verifyUser();
+    if(auth.user){
+      verifyUser();
+    }
   })
 
   if (auth.loading) {

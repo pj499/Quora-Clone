@@ -3,6 +3,7 @@ const app = express();
 const port = 8000;
 const passport = require("passport");
 const passportJWT = require("./config/passport-jwt-strategy");
+const passportGoogle=require("./config/passport-google-oauth")
 const db = require("./config/mongoose");
 const nodemailer = require("./config/nodemailer");
 const bodyParser = require("body-parser");

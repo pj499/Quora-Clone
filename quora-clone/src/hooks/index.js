@@ -10,7 +10,7 @@ export const useProvideAuth = () => {
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const userToken = localStorage.getItem('access-token');
-        console.log("userToken: ", userToken);
+        // console.log("userToken: ", userToken);
         if (userToken) {
             const user = jwtDecode(userToken);
             setUser(user);
@@ -18,7 +18,7 @@ export const useProvideAuth = () => {
         setLoading(false);
     }, []);
     const login = async (email, password) => {
-        console.log("inside hooks login")
+        // console.log("inside hooks login")
         const response = await userLogin(email, password);
         const responseJson = await response.json();
 
@@ -26,9 +26,9 @@ export const useProvideAuth = () => {
             setUser(responseJson.user);
             responseJson.status = 200;
         } else {
-            responseJson.status = 400;
+            responseJson.status = response.status;
         }
-        console.log("responseJson",responseJson)
+        // console.log("responseJson",responseJson)
         setLoading(false);
         return responseJson;
     }
