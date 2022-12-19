@@ -60,9 +60,9 @@ function SignIn() {
   }
 
   useEffect(() => {
-    console.log(auth)
+    // console.log(auth)
     if(localStorage.getItem('access-token')){
-      console.log("inside signin useeffect");
+      // console.log("inside signin useeffect");
       navigate('/home')
     }
     (email != "" && password != "") ? setIsLogin(true) : setIsLogin(false);
@@ -72,15 +72,21 @@ function SignIn() {
     e.preventDefault();
 
     let response = await auth.login(email,password)
-    console.log("response",response);
+    // console.log("response",response);
+    // console.log("event target: ",e.target)
     if(response.status==200){
       toast.success("Logged In Successfully!",toastInfo);
       let accessToken= response.accessToken;
       localStorage.setItem('access-token', accessToken);
       navigate('/home')
-    }else{
+    }else if(response.status==400){
       toast.error("Invalid Username/Password!",toastInfo);
+      
+    }else if(response.status==401){
+      toast.error("User not verified. Please create account again!",toastInfo);
     }
+    e.target[0].value=""
+    e.target[1].value=""
   }
 
   return (
