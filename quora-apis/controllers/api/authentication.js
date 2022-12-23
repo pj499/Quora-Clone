@@ -188,8 +188,8 @@ module.exports.login = async function (req, res) {
         //generate jwt token
         let accessToken = jwt.sign({ email: user.email, name: user.name, userId: user._id }, 'quora-clone-access', { expiresIn: '31d' });
         user.token = accessToken;
-        // user.tokenExpiry = Date.now() + 31 * 24 * 60 * 60 * 1000;
-        user.tokenExpiry = Date.now()+5000;
+        user.tokenExpiry = Date.now() + 31 * 24 * 60 * 60 * 1000;
+        // user.tokenExpiry = Date.now()+5000;
         user.save();
         return res.status(200).send({
             message: 'Logged in successfully.',
