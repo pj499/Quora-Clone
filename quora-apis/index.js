@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require('express-session');
 const app = express();
 const port = 8000;
 const passport = require("passport");
@@ -10,10 +11,17 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const cookieParser= require('cookie-parser');
 
-app.use(cors({credentials:true}));
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: 'GET,POST,PUT,DELETE',
+  credentials:true
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(session({ secret: 'secret' }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use("/", require("./routes"));
 app.listen(port, function (e) {
   if (e) {

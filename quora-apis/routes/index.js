@@ -1,7 +1,10 @@
 const express= require('express')
 const router= express.Router();
 const firstAPI= require("../controllers/index")
-const authentication= require('../controllers/api/authentication')
+const authentication= require('../controllers/api/authentication');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const User = require('../models/users')
 
 router.get('/', firstAPI.firstAPI)
 router.post('/sendVerificationMail', authentication.sendVerificationEmail);
@@ -12,8 +15,21 @@ router.post('/login',authentication.login);
 router.post('/test',authentication.verifyTokenMiddleware,authentication.test);
 router.get('/logout',authentication.logout);
 router.get('/verifyToken',authentication.verifyTokenMiddleware);
+router.get('/googleLogin/success', authentication.googleSignIn)
 
+router.get('/googleLogin/failed', (req, res)=>{
+    console.log('inside /googleLogin/failed')
+    res.status(401).json({
+        success: false,
+        message: 'Google Login Failed'
+    })
+})
 
+router.get('/googleSignIn', passport.authenticate('google', {scope: ['profile', 'email']}));
+router.get('/googleSignIn/callback', passport.authenticate('google', {
+    successRedirect:'http://localhost:3000/', 
+    failureRedirect: '/googleLogin/failed'
+}))
 
 
 module.exports= router;

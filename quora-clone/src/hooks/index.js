@@ -8,11 +8,11 @@ import { useEffect } from "react";
 export const useProvideAuth = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    useEffect(() => {
+    useEffect(async() => {
         const userToken = localStorage.getItem('access-token');
         // console.log("userToken: ", userToken);
         if (userToken) {
-            const user = jwtDecode(userToken);
+            const user = await jwtDecode(userToken);
             setUser(user);
         }
         setLoading(false);

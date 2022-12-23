@@ -188,8 +188,8 @@ module.exports.login = async function (req, res) {
         //generate jwt token
         let accessToken = jwt.sign({ email: user.email, name: user.name, userId: user._id }, 'quora-clone-access', { expiresIn: '31d' });
         user.token = accessToken;
-        // user.tokenExpiry = Date.now() + 31 * 24 * 60 * 60 * 1000;
-        user.tokenExpiry = Date.now()+5000;
+        user.tokenExpiry = Date.now() + 31 * 24 * 60 * 60 * 1000;
+        
         user.save();
         return res.status(200).send({
             message: 'Logged in successfully.',
@@ -279,6 +279,37 @@ module.exports.logout = async function (req, res) {
             message: `Error in logging out user.`
         })
         console.log('Error in verifyTokenMiddleware: ', error);
+        return;
+    }
+}
+
+module.exports.googleSignIn= async function(req, res){
+    try {
+        console.log('user in backend from /googleLogin/success', req.user)
+        let user= await User.findById(req.user._id);
+        if(user){
+            //generate jwt token
+            let accessToken = jwt.sign({ email: user.email, name: user.name, userId: user._id }, 'quora-clone-access', { expiresIn: '31d' });
+            
+            user.token = accessToken;
+            user.tokenExpiry = Date.now() + 31 * 24 * 60 * 60 * 1000;
+            user.save();
+
+            return res.status(200).send({
+                message: 'Logged in successfully.',
+                accessToken: accessToken,
+                user: {
+                    name: user.name,
+                    email: user.email,
+                    userId: user._id
+                }
+            })
+        }
+    } catch (error) {
+        res.send(400, {
+            message: `Error in google login ${error}`
+        })
+        console.log('Error in google login: ', error);
         return;
     }
 }

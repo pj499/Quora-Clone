@@ -1,6 +1,5 @@
 
 export const userLogin= async function(email,password){
-    console.log("inside utility login");
     const url = 'http://localhost:8000/login';
     const dataToSubmit = {
       email: email,
