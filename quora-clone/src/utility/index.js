@@ -1,6 +1,5 @@
 
 export const userLogin= async function(email,password){
-    console.log("inside utility login");
     const url = 'http://localhost:8000/login';
     const dataToSubmit = {
       email: email,
@@ -40,4 +39,19 @@ export const verifyUserToken = async ()=>{
     }
   })
   return response;
+}
+
+export const getUser= async ()=>{
+  let response= await fetch('http://localhost:8000/googleLogin/success', {
+    method: "GET",
+    credentials: 'include',
+    headers: {
+      Accept: 'application/json',
+      "Content-Type": 'application/json',
+      "Access-Control-Allow-Credentials": true
+    }
+  })
+
+  return response;
+  
 }

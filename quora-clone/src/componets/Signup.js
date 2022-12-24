@@ -89,6 +89,7 @@ function SignUp(props) {
   }
 
   useEffect(() => {
+    // console.log("rendered")
     handleName(name);
     handleEmail(email);
   }, [name, email, isEmailValid, isNameValid,goNext,isEmailBlank, isNameBlank])

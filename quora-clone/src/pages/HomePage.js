@@ -3,17 +3,18 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from 'react-toastify'
+import Navbar from "../componets/Navbar";
 import { useAuth } from "../hooks";
 
 function HomePage() {
 
+  const [isUser, setIsUser]= useState(false);
 
-  const [temp, setTemp] = useState('')
   const auth = useAuth();
   let navigate = useNavigate();
   var toastInfo = {
     position: "top-center",
-    autoClose: 5000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -35,9 +36,8 @@ function HomePage() {
     }
   }
   useEffect(() => {
-    console.log(auth)
     const verifyUser = async () => {
-      let verifyToken =await  auth.verifyToken();
+      let verifyToken =await auth.verifyToken();
       if(verifyToken.status!=200){
         console.log("User logged out")
         navigate('/')
@@ -48,18 +48,19 @@ function HomePage() {
     if(auth.user){
       verifyUser();
     }
-  })
+  }, [])
 
-  if (auth.loading) {
+  if (!auth.user || auth.loading) {
     return <h1>Wait for cutesss!!</h1>
   } else {
+    {console.log('auth user',auth.user)}
     return (
-      <div>
+      <div style={{overflowX:"hidden"}}>
+        <Navbar/>
         <h1>{auth.user.email}</h1>
 
-
         <form onSubmit={handleLogout}>
-          <input type='text' onChange={(e) => setTemp(e.target.value)}></input>
+          <input type='text'></input>
           <button type="submit">Logout</button>
         </form>
 

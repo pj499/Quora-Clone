@@ -1,18 +1,20 @@
 import { useState, useContext } from "react"
-import { userLogin, userLogout, verifyUserToken } from "../utility";
+import { userLogin, userLogout, verifyUserToken, getUser } from "../utility";
 import { AuthContext } from "../provider/AuthProvider";
 import jwtDecode from "jwt-decode";
 import { useEffect } from "react";
 
 
 export const useProvideAuth = () => {
+    console.log("useProvideAuth")
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    useEffect(() => {
+    const [isGoogleSignIn, setGoogleSignIn] = useState(false);
+    useEffect(async () => {
         const userToken = localStorage.getItem('access-token');
         // console.log("userToken: ", userToken);
         if (userToken) {
-            const user = jwtDecode(userToken);
+            const user = await jwtDecode(userToken);
             setUser(user);
         }
         setLoading(false);
@@ -32,42 +34,65 @@ export const useProvideAuth = () => {
         setLoading(false);
         return responseJson;
     }
-    const logout = async ()=>{
+    const logout = async () => {
         const response = await userLogout();
         const responseJson = await response.json();
-        console.log("hooks logout: ",responseJson);
-        if(response.status==200){
+        console.log("hooks logout: ", responseJson);
+        if (response.status == 200) {
             setUser(null);
             localStorage.removeItem('access-token');
-            responseJson.status=200;
-        }else{
-            responseJson.status=400;
+            if(localStorage.getItem('isGoogleSignIn')){
+                localStorage.removeItem('isGoogleSignIn');
+            }
+            responseJson.status = 200;
+        } else {
+            responseJson.status = 400;
         }
         setLoading(false);
         return responseJson;
     }
-    const verifyToken = async ()=>{
+    const verifyToken = async () => {
         const response = await verifyUserToken();
         const responseJson = await response.json();
-        if(response.status!=200){
+        if (response.status != 200) {
             setUser(null);
             localStorage.removeItem('access-token');
-            responseJson.status=400;
-        }else{
-            responseJson.status=200;
+            responseJson.status = 400;
+        } else {
+            responseJson.status = 200;
         }
         setLoading(false);
         return responseJson
+    }
+    const googleSignIn = async () => {
+        const response = await getUser();
+        const responseJson = await response.json();
+
+        if (response.status == 200) {
+            setUser(responseJson.user);
+            responseJson.status = 200;
+        } else {
+            responseJson.status = response.status;
+        }
+        setLoading(false);
+        return responseJson;
+    }
+    const setGoogleSign = async (val) =>{
+        setGoogleSignIn(val);
     }
     return {
         user,
         loading,
         login,
         logout,
-        verifyToken
+        verifyToken,
+        googleSignIn,
+        setGoogleSign,
+        isGoogleSignIn
     }
 };
 
 export const useAuth = () => {
+    console.log("useAuth")
     return useContext(AuthContext);
 }
