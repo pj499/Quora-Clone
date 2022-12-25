@@ -10,11 +10,92 @@
 .NavbarContentDiv{
     height:100%;
     width: 80%;
-    border:1px solid red;
+    /* border:1px solid red; */
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
+.IconDiv{
+    padding: 10px;
+    /* border: 1px solid red; */
+}
+.IconDiv:hover{
+    cursor: pointer;
+    background-color: #f7f7f8;
+}
 .Icon{
+    color: #9d9d9f;
+}
+.Icon:focus{
+    color: #a82723;
+}
+.searchBox{
+    width: 25%;
+    padding: 5px 15px;
+    position: relative;
+}
+.searchInput{
+    width: 80%;
+    height: 30px;
+    padding-left: 50px ;
+    border: 1px solid #9d9d9f;
+    border-radius: 3px;
+    outline: none;
+    position: relative;
+}
+.searchInput:hover{
+    border-color: #2e69ff;
+    box-shadow: #f7f7f8;
+}
+.searchInput:focus{
+    border-color: #2e69ff;
+    box-shadow: #f7f7f8;
+}
+.profilePicture{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.profilePicture:hover{
+    cursor: pointer;
+    background-color: #f7f7f8;
+    opacity: 0.8;
+}
+.addQuestion{
+    font-size: smaller;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    padding: 7px 25px;
+    background-color: #a82723;
+    color: white;
+}
+.addQuestion:hover{
+    cursor: pointer;
+    background-color: #991713;
+}
 
+@media screen and (max-width: 768px){
+    .NavbarContentDiv{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 640px){
+    .NavbarContentDiv{
+        width: 100%;
+    }
+    .addQuestion{
+        padding: 3px 10px;
+    }
+    /* .Icon[size]{
+        
+    } */
+    .searchBox{
+        width: 10%;
+    }
 }
