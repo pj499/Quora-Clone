@@ -1,15 +1,43 @@
+import { faL } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from 'react-toastify'
-import Navbar from "../componets/Navbar";
+import {Home, Following, Answer, Spaces, Notifications} from "../componets/index.js";
+import Navbar from "../componets/Navbar.js";
 import { useAuth } from "../hooks";
 
+
 function HomePage() {
+  var initialClickState={
+    home: true,
+    following: false,
+    answer: false,
+    spaces: false,
+    notifications: false
+  }
+  
+  const [clickState, setClickState]= useState(initialClickState);
 
-  const [isUser, setIsUser]= useState(false);
-
+  const handleClick={
+    homeClick: function handleHomeClick(){
+      setClickState(clickState=> ({...initialClickState, home:true}))
+    },
+    followingClick: function handleFollowingClick(){
+      setClickState(clickState=> ({...initialClickState, home:false, following:true}))
+    },
+    answerClick: function handleAnswerClick(){
+      setClickState(clickState=> ({...initialClickState, home:false, answer:true}))
+    },
+    spacesClick: function handleSpacesClick(){
+      setClickState(clickState=> ({...initialClickState, home:false, spaces:true}))
+    },
+    notificationsClick: function handleNotificationsClick(){
+      setClickState(clickState=> ({...initialClickState, home:false, notifications:true}))
+    }
+  }
+  
   const auth = useAuth();
   let navigate = useNavigate();
   var toastInfo = {
@@ -35,6 +63,7 @@ function HomePage() {
       toast.error("Error in logging out user.",toastInfo)
     }
   }
+
   useEffect(() => {
     const verifyUser = async () => {
       let verifyToken =await auth.verifyToken();
@@ -48,16 +77,22 @@ function HomePage() {
     if(auth.user){
       verifyUser();
     }
-  }, [])
+  }, [initialClickState])
 
   if (!auth.user || auth.loading) {
     return <h1>Wait for cutesss!!</h1>
   } else {
     {console.log('auth user',auth.user)}
     return (
+
       <div style={{overflowX:"hidden"}}>
-        <Navbar/>
-        <h1>{auth.user.email}</h1>
+        <Navbar onClick={handleClick} clickState={clickState}/>
+
+        {clickState.home && <Home/>}
+        {clickState.following && <Following/>}
+        {clickState.answer && <Answer/>}
+        {clickState.spaces && <Spaces/>}
+        {clickState.notifications && <Notifications/>}
 
         <form onSubmit={handleLogout}>
           <input type='text'></input>

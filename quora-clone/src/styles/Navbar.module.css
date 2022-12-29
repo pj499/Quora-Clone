@@ -1,6 +1,7 @@
 .NavbarContainer{
     height:50px;
     width: 100%;
+    min-width: 700px;
     border: 1px solid black;
     /* background-color: #f1f2f2; */
     display: flex;
@@ -26,11 +27,12 @@
 .Icon{
     color: #9d9d9f;
 }
-.Icon:focus{
+.IconSelected{
     color: #a82723;
 }
 .searchBox{
     width: 25%;
+    min-width: 20%;
     padding: 5px 15px;
     position: relative;
 }
@@ -78,8 +80,11 @@
     cursor: pointer;
     background-color: #991713;
 }
+.profileDropDown{
+    
+}
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 950px){
     .NavbarContentDiv{
         width: 100%;
     }
@@ -92,9 +97,7 @@
     .addQuestion{
         padding: 3px 10px;
     }
-    /* .Icon[size]{
-        
-    } */
+    
     .searchBox{
         width: 10%;
     }

@@ -8,7 +8,7 @@ passport.use(new googleStrategy({
     clientSecret:"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",
     callbackURL:"http://localhost:8000/googleSignIn/callback"
 },async function(accessToken,refreshToken,profile,done){
-    // console.log('profile in google auth', profile)
+    console.log('profile in google auth', profile)
     let user= await User.findOne({email: profile.emails[0].value});
     if(user){
         return done(null,user);
@@ -18,12 +18,13 @@ passport.use(new googleStrategy({
             name: profile.displayName,
             email: profile.emails[0].value,
             password: crypto.randomBytes(10).toString('hex'),
+            avatar: profile.photos[0].value,
             verified: true
         })
         
         if(!newUser){
             return res.status(400).send({
-                message: 'Error in signing up with google.'
+                message: 'Error in signing up with google.',
             })
         }else{
             // console.log('newUser', newUser)

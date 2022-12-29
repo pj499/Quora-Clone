@@ -186,7 +186,7 @@ module.exports.login = async function (req, res) {
         }
 
         //generate jwt token
-        let accessToken = jwt.sign({ email: user.email, name: user.name, userId: user._id }, 'quora-clone-access', { expiresIn: '31d' });
+        let accessToken = jwt.sign({ email: user.email, name: user.name, userId: user._id, avatar: user.avatar}, 'quora-clone-access', { expiresIn: '31d' });
         user.token = accessToken;
         user.tokenExpiry = Date.now() + 31 * 24 * 60 * 60 * 1000;
         
@@ -197,7 +197,8 @@ module.exports.login = async function (req, res) {
             user: {
                 name: user.name,
                 email: user.email,
-                userId: user._id
+                userId: user._id,
+                avatar: user.avatar
             }
         })
     } catch (error) {
@@ -271,7 +272,7 @@ module.exports.logout = async function (req, res) {
             dbUser.tokenExpiry = null;
             dbUser.save();
             return res.status(200).send({
-                message: "User logged out successfully."
+                message: "User logged out successfully.",
             })
         })
     } catch (error) {
@@ -289,7 +290,7 @@ module.exports.googleSignIn= async function(req, res){
         let user= await User.findById(req.user._id);
         if(user){
             //generate jwt token
-            let accessToken = jwt.sign({ email: user.email, name: user.name, userId: user._id }, 'quora-clone-access', { expiresIn: '31d' });
+            let accessToken = jwt.sign({ email: user.email, name: user.name, userId: user._id, avatar:user.avatar }, 'quora-clone-access', { expiresIn: '31d' });
             
             user.token = accessToken;
             user.tokenExpiry = Date.now() + 31 * 24 * 60 * 60 * 1000;
@@ -301,7 +302,8 @@ module.exports.googleSignIn= async function(req, res){
                 user: {
                     name: user.name,
                     email: user.email,
-                    userId: user._id
+                    userId: user._id,
+                    avatar: user.avatar
                 }
             })
         }
