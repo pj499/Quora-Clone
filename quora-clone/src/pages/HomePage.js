@@ -77,7 +77,7 @@ function HomePage() {
     if(auth.user){
       verifyUser();
     }
-  }, [initialClickState])
+  }, [])
 
   if (!auth.user || auth.loading) {
     return <h1>Wait for cutesss!!</h1>
@@ -85,7 +85,7 @@ function HomePage() {
     {console.log('auth user',auth.user)}
     return (
 
-      <div style={{overflowX:"hidden"}}>
+      <div style={{overflowX:"hidden",height:"99vh"}}>
         <Navbar onClick={handleClick} clickState={clickState}/>
 
         {clickState.home && <Home/>}
