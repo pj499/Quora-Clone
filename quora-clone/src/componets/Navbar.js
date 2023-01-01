@@ -8,7 +8,7 @@ import { faHouse,faBarsStaggered,faUserGroup,faPen,faBell, faMagnifyingGlass } f
 import { useAuth } from "../hooks";
 
 function Navbar(props){
-    const [profileDropDown, setProfileDropDown]= useState(false);
+    // const [profileDropDown, setProfileDropDown]= useState(false);
 
     const auth = useAuth();
     console.log('user in navbar', auth.user)
@@ -39,14 +39,14 @@ function Navbar(props){
                         <input className={styles.searchInput} type='text' placeholder='Search Quora'></input>
                     </div>
 
-                    <div className={styles.profilePicture} onClick={setProfileDropDown(!profileDropDown)}>
+                    <div className={styles.profilePicture} >
                         <img src={auth.user.avatar} alt="" 
                             referrerpolicy="no-referrer"
                             style={{width:'25px', height:'25px', border: '1px solid black', borderRadius: '50px'}}>
                         </img>
-                        {profileDropDown && <div className={styles.profileDropDown}>
+                        {/* {profileDropDown && <div className={styles.profileDropDown}>
 
-                        </div>}
+                        </div>} */}
                     </div>
 
                     <button type="button" className={styles.addQuestion}>Add Question</button>
