@@ -1,0 +1,8 @@
+.homepageContainer{
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position:relative;
+    z-index: 0;
+    font-family:  'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

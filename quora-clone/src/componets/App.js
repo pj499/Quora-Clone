@@ -15,7 +15,6 @@ function App() {
       <Routes>
           <Route path='/' element={<SignIn/>}></Route>
           <Route path='/home' element={<HomePage/>}></Route>
-          {/* <Route path='/userRedirect' element={</>}></Route> */}
       </Routes>
     </div>
   );

@@ -4,12 +4,14 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from 'react-toastify'
+import AddQuestion from "../componets/AddQuestion.js";
 import {Home, Following, Answer, Spaces, Notifications} from "../componets/index.js";
 import Navbar from "../componets/Navbar.js";
 import { useAuth } from "../hooks";
+import styles from '../styles/HomePage.module.css'
 
 
-function HomePage() {
+function HomePage() {  
   var initialClickState={
     home: true,
     following: false,
@@ -19,6 +21,8 @@ function HomePage() {
   }
   
   const [clickState, setClickState]= useState(initialClickState);
+  const [profileDropDown, setProfileDropDown] = useState(false);
+  const [isAddQuestion, setIsAddQuestion] = useState(false);
 
   const handleClick={
     homeClick: function handleHomeClick(){
@@ -37,7 +41,7 @@ function HomePage() {
       setClickState(clickState=> ({...initialClickState, home:false, notifications:true}))
     }
   }
-  
+
   const auth = useAuth();
   let navigate = useNavigate();
   var toastInfo = {
@@ -51,19 +55,17 @@ function HomePage() {
     theme: "dark",
   };
 
-  const handleLogout = async (e) => {
-    e.preventDefault();
-    let response =await auth.logout();
-    console.log("handlelogout",response)
-    if (response.status == 200) {
-      toast.success("User logged out!", toastInfo);
-      navigate('/')
-      return;
-    }else{
-      toast.error("Error in logging out user.",toastInfo)
-    }
+  function handleProfileDropDown(){
+    setProfileDropDown(!profileDropDown)
   }
 
+  function handleIsAddQuestion(){
+    setIsAddQuestion(true)
+  }
+  function handleAddQuestionClose(){
+    setIsAddQuestion(false)
+  }
+  
   useEffect(() => {
     const verifyUser = async () => {
       let verifyToken =await auth.verifyToken();
@@ -77,29 +79,34 @@ function HomePage() {
     if(auth.user){
       verifyUser();
     }
-  }, [initialClickState])
+  }, [])
 
   if (!auth.user || auth.loading) {
     return <h1>Wait for cutesss!!</h1>
   } else {
     {console.log('auth user',auth.user)}
     return (
+      <>
+        {isAddQuestion && <AddQuestion handleAddQuestionClose={handleAddQuestionClose}/>}
+        <div className={styles.homepageContainer}>
+          <Navbar 
+            onClick={handleClick} 
+            clickState={clickState} 
+            profileDropDown={profileDropDown} 
+            handleProfileDropDown={handleProfileDropDown}
+            isAddQuestion={isAddQuestion}
+            handleIsAddQuestion={handleIsAddQuestion}
+            />
 
-      <div style={{overflowX:"hidden"}}>
-        <Navbar onClick={handleClick} clickState={clickState}/>
-
-        {clickState.home && <Home/>}
-        {clickState.following && <Following/>}
-        {clickState.answer && <Answer/>}
-        {clickState.spaces && <Spaces/>}
-        {clickState.notifications && <Notifications/>}
-
-        <form onSubmit={handleLogout}>
-          <input type='text'></input>
-          <button type="submit">Logout</button>
-        </form>
-
-      </div>
+          <div onClick={()=> {setProfileDropDown(false)}}>
+            {clickState.home && <Home/>}
+            {clickState.following && <Following/>}
+            {clickState.answer && <Answer/>}
+            {clickState.spaces && <Spaces/>}
+            {clickState.notifications && <Notifications/>}
+          </div>
+        </div>
+      </>
     );
   }
 }
