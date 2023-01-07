@@ -224,6 +224,7 @@ module.exports.verifyTokenMiddleware = function (req, res, next) {
 
         jwt.verify(accessToken, 'quora-clone-access', async (err, user) => {
             let dbUser = await User.findOne({ email: user.email });
+            console.log('dbuser', dbUser)
             let date = Date.now()
             if (dbUser.tokenExpiry <= date) {
                 return res.status(401).send({

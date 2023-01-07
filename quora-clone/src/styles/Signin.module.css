@@ -144,6 +144,7 @@
     background-color: #195faa;
     border: none;
     border-radius: 25px;
+    cursor: pointer;
 }
 .formLoginButton:disabled{
     background-color: #97B4FF;

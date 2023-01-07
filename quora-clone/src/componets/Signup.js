@@ -148,7 +148,7 @@ function SignUp(props) {
             <div style={{ width: '100%', borderBottom: '1px solid lightGray', marginTop: '35px'}}>
 
             </div>
-            <button  type="sbumit" className={signinStyles.formLoginButton} disabled={!goNext}
+            <button  type="submit" className={signinStyles.formLoginButton} disabled={!goNext}
             style={{width: '15%', marginTop: '10px', position: 'relative', left: '40%'}}
             >
               Next

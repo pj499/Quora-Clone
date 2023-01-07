@@ -1,0 +1,70 @@
+.questionContainer{
+    width: 40%;
+    height: 150px;
+    border: 0.5px solid #f7f7f7;
+    box-shadow: 0 0 5px 1px lightgray;
+    box-sizing: border-box;
+    background-color: white;
+    margin: auto;
+    padding: 0 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+
+}
+.questionHeading{
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #282829;
+    text-align: left;
+    margin: 15px 0;
+}
+.profileInfo{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* border: 1px solid blue; */
+
+}
+.questionActions{
+    width: 100%;
+    height: 50px;
+    /* border: 1px solid red; */
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px solid lightgray;
+}
+.answerButton{
+    width: 100px;
+    height: 30px;
+    border: 0.5px solid lightgray;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    border-radius: 17px;
+    background-color: white;
+    color: #636466;
+    font-size: small;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.answerButton:hover{
+    background-color: #f7f7f7;
+}
+.questionComment{
+    width: 40px;
+    height: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    margin-left: 10px;
+}
+.questionComment:hover{
+    background-color: #f7f7f7;
+}
