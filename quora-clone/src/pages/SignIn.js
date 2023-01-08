@@ -8,7 +8,6 @@ import VerifyEmail from "../componets/VerifyEmail";
 import Password from "../componets/Password";
 import { toast } from 'react-toastify'
 import { useAuth } from "../hooks";
-import GoogleSignInButton from "../componets/googleSignInButton";
 
 function SignIn() {
   const [showSignUp, setShowSignUp] = useState(false);

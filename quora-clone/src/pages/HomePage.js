@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from 'react-toastify'
 import AddQuestion from "../componets/AddQuestion.js";
+import AddAnswer from "../componets/AddAnswer"
 import {Home, Following, Answer, Spaces, Notifications} from "../componets/index.js";
 import Navbar from "../componets/Navbar.js";
 import { useAuth } from "../hooks";
@@ -23,6 +24,7 @@ function HomePage() {
   const [clickState, setClickState]= useState(initialClickState);
   const [profileDropDown, setProfileDropDown] = useState(false);
   const [isAddQuestion, setIsAddQuestion] = useState(false);
+  const [isAddAnswer, setIsAddAnswer] = useState(false);
 
   const handleClick={
     homeClick: function handleHomeClick(){
@@ -62,8 +64,17 @@ function HomePage() {
   function handleIsAddQuestion(){
     setIsAddQuestion(true)
   }
+
+  function handleIsAddAnswer(){
+    setIsAddAnswer(true)
+  }
+  
   function handleAddQuestionClose(){
     setIsAddQuestion(false)
+  }
+
+  function handleAddAnswerClose(){
+    setIsAddAnswer(false)
   }
   
   useEffect(() => {
@@ -88,6 +99,7 @@ function HomePage() {
     return (
       <>
         {isAddQuestion && <AddQuestion handleAddQuestionClose={handleAddQuestionClose}/>}
+        {isAddAnswer && <AddAnswer handleAddAnswerClose={handleAddAnswerClose}/>}
         <div className={styles.homepageContainer}>
           <Navbar 
             onClick={handleClick} 
@@ -99,7 +111,7 @@ function HomePage() {
             />
 
           <div onClick={()=> {setProfileDropDown(false)}}>
-            {clickState.home && <Home/>}
+            {clickState.home && <Home handleIsAddAnswer={handleIsAddAnswer}/>}
             {clickState.following && <Following/>}
             {clickState.answer && <Answer/>}
             {clickState.spaces && <Spaces/>}

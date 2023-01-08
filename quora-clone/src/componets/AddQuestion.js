@@ -11,17 +11,61 @@ function AddQuestion(props) {
   const [goNext, setGoNext] = useState(false);
   const [addQuestionBox, setAddQuestionBox] = useState(true);
   const [createPostBox, setCreatePostBox] = useState(false);
+  const [question, setQuestion] = useState("");
+  const [isAddQuestion, setIsAddQuestion] = useState(false);
 
   const auth = useAuth();
+  var toastInfo = {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+  };
 
-  const handleSubmit = async (e) => {};
-  const handleTextarea= ({target}) =>{
+  const handleTextarea = ({ target }) => {
     target.style.height = 0;
-    target.style.height = Math.min(target.scrollHeight ,180) + 'px';    
+    target.style.height = Math.min(target.scrollHeight, 180) + "px";
+  };
+
+  const handleQuestionSubmit = async (e) => {
+    e.preventDefault();
+    const url = "http://localhost:8000/addQuestion";
+    const dataToSubmit = {
+      question: question,
+      askedByEmail: auth.user.email,
+    };
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(dataToSubmit),
+    });
+
+    console.log("response in add Q", response);
+    if(response.status==200){
+      toast.success('Question Added Successfully!', toastInfo)
+      props.handleAddQuestionClose();
+    }else if(response.status==400){
+      toast.error('Cannot add question, try again!', toastInfo)
+    }
+  };
+
+  function handleQuestion(ques) {
+    if (ques.length > 0) {
+      setIsAddQuestion(true);
+    } else {
+      setIsAddQuestion(false);
+    }
   }
 
   useEffect(() => {
-  }, []);
+    handleQuestion(question);
+  }, [question, isAddQuestion]);
 
   return (
     <>
@@ -62,42 +106,58 @@ function AddQuestion(props) {
             </div>
           </div>
 
-
           {addQuestionBox && (
             <form
               action=""
               method="post"
-              style={{ width: "100%", height: "350px"}}
+              style={{ width: "100%", height: "350px" }}
+              onSubmit={handleQuestionSubmit}
             >
               <div className={styles.addQuestionContent}>
                 <div className={styles.profileInfo}>
-                    <img src={auth.user.avatar} alt=""
-                                referrerpolicy="no-referrer"
-                                style={{ width: '25px', height: '25px', borderRadius: '50px' }}
-                        >
-                    </img>
-                    <FontAwesomeIcon icon={faPlay}style={{paddingLeft: '10px', color: '#636466', fontSize:'10px'}}/>
+                  <img
+                    src={auth.user.avatar}
+                    alt=""
+                    referrerPolicy="no-referrer"
+                    style={{
+                      width: "25px",
+                      height: "25px",
+                      borderRadius: "50px",
+                    }}
+                  ></img>
+                  <FontAwesomeIcon
+                    icon={faPlay}
+                    style={{
+                      paddingLeft: "10px",
+                      color: "#636466",
+                      fontSize: "10px",
+                    }}
+                  />
                 </div>
-                <textarea className={styles.addQuestionContentTextarea} onChange={handleTextarea}
-                placeholder='Start your question with "What", "How", "Why", etc.'>
-                    
-                </textarea>
+                <textarea
+                  className={styles.addQuestionContentTextarea}
+                  onChange={(e) => {
+                    setQuestion(e.target.value);
+                    handleTextarea(e);
+                  }}
+                  placeholder='Start your question with "What", "How", "Why", etc.'
+                ></textarea>
               </div>
 
               <div
                 style={{
                   width: "100%",
-                  borderBottom: "1px solid lightGray"
+                  borderBottom: "1px solid lightGray",
                 }}
               ></div>
 
               <button
-                type="sbumit"
+                type="submit"
                 className={signinStyles.formLoginButton}
-                disabled={!goNext}
+                disabled={!isAddQuestion}
                 style={{
                   width: "25%",
-                  height: '12%',
+                  height: "12%",
                   marginTop: "12px",
                   position: "relative",
                   left: "35%",
@@ -108,52 +168,73 @@ function AddQuestion(props) {
             </form>
           )}
 
-          
           {createPostBox && (
             <form
-            action=""
-            method="post"
-            style={{ width: "100%", height: "350px"}}
-          >
-            <div className={styles.addQuestionContent}>
-              <div className={styles.profileInfo}>
-                  <img src={auth.user.avatar} alt=""
-                              referrerpolicy="no-referrer"
-                              style={{ width: '25px', height: '25px', borderRadius: '50px' }}
-                      >
-                  </img>
-                  <h6 style={{paddingLeft: '10px', fontFamily:"Cantarell, Helvetica Neue, sans-serif"}}>{auth.user.name}</h6>
-              </div>
-              <textarea className={styles.createPostBoxTextarea} onChange={handleTextarea}
-              placeholder='Say something...'>
-                  
-              </textarea>
-            </div>
-
-            <div
-              style={{
-                width: "100%",
-                borderBottom: "1px solid lightGray"
-              }}
-            ></div>
-            
-            
-            <FontAwesomeIcon icon={faImage} size='lg' style={{position: "relative",left:'-40%', paddingLeft: '10px', color: '#636466', cursor:'pointer'}}/>
-            <button
-              type="sbumit"
-              className={signinStyles.formLoginButton}
-              disabled={!goNext}
-              style={{
-                width: "15%",
-                height: '12%',
-                marginTop: "12px",
-                position: "relative",
-                left: "35%",
-              }}
+              action=""
+              method="post"
+              style={{ width: "100%", height: "350px" }}
             >
-              Post
-            </button>
-          </form>
+              <div className={styles.addQuestionContent}>
+                <div className={styles.profileInfo}>
+                  <img
+                    src={auth.user.avatar}
+                    alt=""
+                    referrerPolicy="no-referrer"
+                    style={{
+                      width: "25px",
+                      height: "25px",
+                      borderRadius: "50px",
+                    }}
+                  ></img>
+                  <h6
+                    style={{
+                      paddingLeft: "10px",
+                      fontFamily: "Cantarell, Helvetica Neue, sans-serif",
+                    }}
+                  >
+                    {auth.user.name}
+                  </h6>
+                </div>
+                <textarea
+                  className={styles.createPostBoxTextarea}
+                  onChange={handleTextarea}
+                  placeholder="Say something..."
+                ></textarea>
+              </div>
+
+              <div
+                style={{
+                  width: "100%",
+                  borderBottom: "1px solid lightGray",
+                }}
+              ></div>
+
+              <FontAwesomeIcon
+                icon={faImage}
+                size="lg"
+                style={{
+                  position: "relative",
+                  left: "-40%",
+                  paddingLeft: "10px",
+                  color: "#636466",
+                  cursor: "pointer",
+                }}
+              />
+              <button
+                type="submit"
+                className={signinStyles.formLoginButton}
+                disabled={!goNext}
+                style={{
+                  width: "15%",
+                  height: "12%",
+                  marginTop: "12px",
+                  position: "relative",
+                  left: "35%",
+                }}
+              >
+                Post
+              </button>
+            </form>
           )}
         </div>
       </div>

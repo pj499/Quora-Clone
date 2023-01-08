@@ -1,8 +1,25 @@
 import React from 'react'
-
-const Home = () => {
+import styles from '../styles/Home.module.css'
+import DisplayQuestion from './DisplayQuestion.js'
+const Home = (props) => {
   return (
-    <div style={{height:'100vh', backgroundColor: '#F1F2F2'}}>Home</div>
+    <div className={styles.homeContainer}>
+      <div className={styles.homeContent}>
+
+      </div>
+      <DisplayQuestion handleIsAddAnswer={props.handleIsAddAnswer}/>
+      <DisplayQuestion/>
+      <DisplayQuestion/>
+      <DisplayQuestion/>
+      <DisplayQuestion/>
+      <DisplayQuestion/>
+      <DisplayQuestion/>
+      <DisplayQuestion/>
+      <DisplayQuestion/>
+      <DisplayQuestion/>
+      <DisplayQuestion/>
+    </div>
+
   )
 }
 
