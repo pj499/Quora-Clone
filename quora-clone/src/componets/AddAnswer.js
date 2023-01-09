@@ -29,41 +29,42 @@ function AddQuestion(props) {
     target.style.height = Math.min(target.scrollHeight, 180) + "px";
   };
 
-//   const handleQuestionSubmit = async (e) => {
-//     e.preventDefault();
-//     const url = "http://localhost:8000/addQuestion";
-//     const dataToSubmit = {
-//       question: question,
-//       askedByEmail: auth.user.email,
-//     };
-//     const response = await fetch(url, {
-//       method: "POST",
-//       headers: {
-//         "Content-type": "application/json",
-//       },
-//       body: JSON.stringify(dataToSubmit),
-//     });
+  function handleAnswer(ans){
+    setAnswer(ans);
+    if(answer.length>0){
+      setIsAddAnswer(true);
+    }else{
+      setIsAddAnswer(false);
+    }
+  }
 
-//     console.log("response in add Q", response);
-//     if(response.status==200){
-//       toast.success('Question Added Successfully!', toastInfo)
-//       props.handleAddQuestionClose();
-//     }else if(response.status==400){
-//       toast.error('Cannot add question, try again!', toastInfo)
-//     }
-//   };
+  const handleAnswerSubmit = async (e) => {
+    e.preventDefault();
+    const url = "http://localhost:8000/addAnswer";
+    const dataToSubmit = {
+      answer,
+      answeredBy: auth.user.email,
+    };
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(dataToSubmit),
+    });
 
-//   function handleQuestion(ques) {
-//     if (ques.length > 0) {
-//       setIsAddQuestion(true);
-//     } else {
-//       setIsAddQuestion(false);
-//     }
-//   }
+    console.log("response in add Ans", response);
+    if(response.status==200){
+      toast.success('Answer Added Successfully!', toastInfo)
+      props.handleAddQuestionClose();
+    }else if(response.status==400){
+      toast.error('Cannot add answer, try again!', toastInfo)
+    }
+  };
 
-//   useEffect(() => {
-//     handleQuestion(question);
-//   }, [question, isAddQuestion]);
+  useEffect(() => {
+    handleAnswer(answer);
+  }, [answer, isAddAnswer]);
 
   return (
     <>
@@ -84,6 +85,7 @@ function AddQuestion(props) {
               action=""
               method="post"
               style={{ width: "100%", height: "350px" }}
+              onSubmit={handleAnswerSubmit}
             >
               <div className={styles.addQuestionContent}>
                 <div className={styles.profileInfo}>
@@ -108,7 +110,7 @@ function AddQuestion(props) {
                 </div>
                 <textarea
                   className={styles.createPostBoxTextarea}
-                  onChange={handleTextarea}
+                  onChange={(e)=>{handleAnswer(e.target.value); handleTextarea(e);}}
                   placeholder="Say something..."
                 ></textarea>
               </div>

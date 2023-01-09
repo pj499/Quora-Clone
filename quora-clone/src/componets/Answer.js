@@ -1,8 +1,9 @@
 import React from 'react'
 
+
 const Answer = () => {
   return (
-    <div>Answer</div>
+    <div>answer</div>
   )
 }
 

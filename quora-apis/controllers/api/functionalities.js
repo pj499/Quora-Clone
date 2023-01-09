@@ -28,3 +28,11 @@ module.exports.addQuestion= async function(req, res){
         })
     }
 }
+
+module.exports.addAnswer= async function(req, res){
+    try {
+        
+    } catch (error) {
+        
+    }
+}

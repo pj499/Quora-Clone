@@ -30,5 +30,6 @@ router.get('/googleSignIn/callback', passport.authenticate('google', {
     failureRedirect: '/googleLogin/failed'
 }))
 router.post('/addQuestion', functionalitites.addQuestion);
+router.post('/addAnswer', functionalitites.addAnswer);
 
 module.exports= router;
