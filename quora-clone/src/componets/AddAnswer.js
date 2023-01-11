@@ -29,11 +29,11 @@ function AddQuestion(props) {
     target.style.height = Math.min(target.scrollHeight, 180) + "px";
   };
 
-  function handleAnswer(ans){
+  function handleAnswer(ans) {
     setAnswer(ans);
-    if(answer.length>0){
+    if (answer.length > 0) {
       setIsAddAnswer(true);
-    }else{
+    } else {
       setIsAddAnswer(false);
     }
   }
@@ -54,10 +54,10 @@ function AddQuestion(props) {
     });
 
     console.log("response in add Ans", response);
-    if(response.status==200){
+    if (response.status == 200) {
       toast.success('Answer Added Successfully!', toastInfo)
       props.handleAddQuestionClose();
-    }else if(response.status==400){
+    } else if (response.status == 400) {
       toast.error('Cannot add answer, try again!', toastInfo)
     }
   };
@@ -81,74 +81,79 @@ function AddQuestion(props) {
         </button>
         <div className={signUpStyles.signUpInfo}>
 
-            <form
-              action=""
-              method="post"
-              style={{ width: "100%", height: "350px" }}
-              onSubmit={handleAnswerSubmit}
-            >
-              <div className={styles.addQuestionContent}>
-                <div className={styles.profileInfo}>
-                  <img
-                    src={auth.user.avatar}
-                    alt=""
-                    referrerPolicy="no-referrer"
-                    style={{
-                      width: "25px",
-                      height: "25px",
-                      borderRadius: "50px",
-                    }}
-                  ></img>
-                  <FontAwesomeIcon
-                    icon={faPlay}
-                    style={{
-                      paddingLeft: "10px",
-                      color: "#636466",
-                      fontSize: "10px",
-                    }}
-                  />
-                </div>
-                <textarea
-                  className={styles.createPostBoxTextarea}
-                  onChange={(e)=>{handleAnswer(e.target.value); handleTextarea(e);}}
-                  placeholder="Say something..."
-                ></textarea>
+          <form
+            action=""
+            method="post"
+            style={{ width: "100%", height: "350px" }}
+            // onSubmit={handleAnswerSubmit}
+          >
+            <div className={styles.addQuestionContent}>
+              <div className={styles.profileInfo}>
+                <img
+                  src={auth.user.avatar}
+                  alt=""
+                  referrerPolicy="no-referrer"
+                  style={{
+                    width: "25px",
+                    height: "25px",
+                    borderRadius: "50px",
+                  }}
+                ></img>
+                <FontAwesomeIcon
+                  icon={faPlay}
+                  style={{
+                    paddingLeft: "10px",
+                    color: "#636466",
+                    fontSize: "10px",
+                  }}
+                />
               </div>
+              <div className={styles.showQuestionDiv}>
+                <h4 style={{margin:"0px"}}>
+                  Who won the world cup?
+                </h4>
+              </div>
+              <textarea
+                className={styles.createPostBoxTextarea}
+                onChange={(e) => { handleAnswer(e.target.value); handleTextarea(e); }}
+                placeholder="Say something..."
+              ></textarea>
+            </div>
 
-              <div
-                style={{
-                  width: "100%",
-                  borderBottom: "1px solid lightGray",
-                }}
-              ></div>
+            <div
+              style={{
+                width: "100%",
+                borderBottom: "1px solid lightGray",
+              }}
+            ></div>
 
-<FontAwesomeIcon
-                icon={faImage}
-                size="lg"
-                style={{
-                  position: "relative",
-                  left: "-40%",
-                  paddingLeft: "10px",
-                  color: "#636466",
-                  cursor: "pointer",
-                }}
-              />
-              <button
-                type="submit"
-                className={signinStyles.formLoginButton}
-                disabled={!isAddAnswer}
-                style={{
-                  width: "15%",
-                  height: "12%",
-                  marginTop: "12px",
-                  position: "relative",
-                  left: "35%",
-                }}
-              >
-                Post
-              </button>
-            </form>
-         
+            <FontAwesomeIcon
+              icon={faImage}
+              size="lg"
+              style={{
+                position: "relative",
+                left: "-40%",
+                paddingLeft: "10px",
+                color: "#636466",
+                cursor: "pointer",
+              }}
+            />
+            <button
+              type="submit"
+              className={signinStyles.formLoginButton}
+              disabled={!isAddAnswer}
+              style={{
+                width: "15%",
+                height: "12%",
+                marginTop: "12px",
+                position: "relative",
+                left: "35%",
+              }}
+            >
+              Post
+            </button>
+          </form>
+
         </div>
       </div>
     </>

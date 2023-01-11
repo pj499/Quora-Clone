@@ -1,5 +1,5 @@
 .questionContainer{
-    width: 40%;
+    width: 50%;
     border: 0.5px solid #f7f7f7;
     box-shadow: 0 0 5px 1px lightgray;
     box-sizing: border-box;
@@ -37,6 +37,13 @@
     align-items: center;
     justify-content: flex-start;
     border-bottom: 1px solid lightgray;
+}
+.userName{
+    font-size: small;
+    cursor: pointer;
+}
+.userName:hover{
+    text-decoration: underline;
 }
 .answerButton{
     width: 100px;

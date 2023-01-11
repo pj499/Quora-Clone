@@ -20,9 +20,10 @@ const DisplayQuestion = (props) => {
               borderRadius: "50px",
             }}
           ></img>
-          <h6
+          <h6 className={styles.userName}
             style={{
               paddingLeft: "10px",
+              paddingTop:"5px",
               fontFamily: "Cantarell, Helvetica Neue, sans-serif",
             }}
           >
