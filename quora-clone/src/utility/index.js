@@ -53,5 +53,5 @@ export const getUser= async ()=>{
   })
 
   return response;
-  
 }
+

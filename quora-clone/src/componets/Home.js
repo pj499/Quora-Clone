@@ -3,8 +3,11 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import styles from '../styles/Home.module.css'
 import DisplayQuestion from './DisplayQuestion.js'
+import {connect} from 'react-redux'
+
 const Home = (props) => {
   const [questions,setQuestions]=useState([]);
+
   async function fetchingQuestions() {
     const url = "http://localhost:8000/fetchQuestions";
     var response = await fetch(url, {
@@ -18,6 +21,8 @@ const Home = (props) => {
     setQuestions(response2.questions);
     console.log("response: ", questions)
   }
+
+
   useEffect(() => {
     fetchingQuestions();
   },[])
@@ -35,4 +40,4 @@ const Home = (props) => {
   )
 }
 
-export default Home
+export default connect()(Home)

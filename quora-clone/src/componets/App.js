@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import HomePage from '../pages/HomePage';
 import { useAuth } from "../hooks";
+import {connect} from 'react-redux'
 
 function App() {
   const auth = useAuth();
@@ -20,4 +21,4 @@ function App() {
   );
 }
 
-export default App;
+export default connect()(App);
