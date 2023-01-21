@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import styles from "../styles/AddQuestion.module.css";
 import { useAuth } from "../hooks";
 import { fetchingQuestions } from "../utility";
+import { connect } from "react-redux";
 
 function AddQuestion(props) {
   const [addQuestionBox, setAddQuestionBox] = useState(true);
@@ -227,7 +228,6 @@ function AddQuestion(props) {
               <button
                 type="submit"
                 className={signinStyles.formLoginButton}
-                disabled={!goNext}
                 style={{
                   width: "15%",
                   height: "12%",
@@ -251,6 +251,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchQuestions: () => dispatch(fetchQuestions)
+  fetchQuestions: () => dispatch(fetchingQuestions)
 });
 export default connect(mapStateToProps,mapDispatchToProps)(AddQuestion);

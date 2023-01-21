@@ -17,6 +17,7 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../hooks";
+import {connect} from "react-redux"
 
 function Navbar(props) {
   const handleLogout = async (e) => {

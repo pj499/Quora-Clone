@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import HomePage from '../pages/HomePage';
 import { useAuth } from "../hooks";
 import {connect} from 'react-redux'
+import UserProfile from '../pages/UserProfile';
 
 function App() {
   const auth = useAuth();
@@ -16,6 +17,7 @@ function App() {
       <Routes>
           <Route path='/' element={<SignIn/>}></Route>
           <Route path='/home' element={<HomePage/>}></Route>
+          <Route path='/userProfile/:userId' element={<UserProfile/>}></Route>
       </Routes>
     </div>
   );
