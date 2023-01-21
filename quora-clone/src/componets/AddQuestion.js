@@ -6,9 +6,9 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import styles from "../styles/AddQuestion.module.css";
 import { useAuth } from "../hooks";
+import { fetchingQuestions } from "../utility";
 
 function AddQuestion(props) {
-  const [goNext, setGoNext] = useState(false);
   const [addQuestionBox, setAddQuestionBox] = useState(true);
   const [createPostBox, setCreatePostBox] = useState(false);
   const [question, setQuestion] = useState("");
@@ -48,6 +48,10 @@ function AddQuestion(props) {
 
     console.log("response in add Q", response);
     if(response.status==200){
+      let questions= await fetchingQuestions();
+      console.log("questions in add question: ",questions);
+      props.fetchQuestions = questions.questions;
+      
       toast.success('Question Added Successfully!', toastInfo)
       props.handleAddQuestionClose();
     }else if(response.status==400){
@@ -242,4 +246,11 @@ function AddQuestion(props) {
   );
 }
 
-export default AddQuestion;
+const mapStateToProps = state => ({
+  ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchQuestions: () => dispatch(fetchQuestions)
+});
+export default connect(mapStateToProps,mapDispatchToProps)(AddQuestion);

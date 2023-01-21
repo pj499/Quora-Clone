@@ -211,5 +211,12 @@ function Navbar(props) {
     </>
   );
 }
+const mapStateToProps = state => ({
+  ...state
+});
 
-export default Navbar;
+const mapDispatchToProps = dispatch => ({
+  fetchQuestions: () => dispatch(fetchQuestions)
+});
+export default connect()(Navbar);
+

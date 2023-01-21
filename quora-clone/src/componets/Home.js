@@ -3,29 +3,13 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import styles from '../styles/Home.module.css'
 import DisplayQuestion from './DisplayQuestion.js'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 const Home = (props) => {
-  const [questions,setQuestions]=useState([]);
-
-  async function fetchingQuestions() {
-    const url = "http://localhost:8000/fetchQuestions";
-    var response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        "Content-type": "application/json",
-      },
-    }
-    )
-    var response2 = await response.json();
-    setQuestions(response2.questions);
-    console.log("response: ", questions)
-  }
-
+  const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    fetchingQuestions();
-  },[])
+  }, [])
   return (
     <div className={styles.homeContainer}>
       <div className={styles.homeContent}>
