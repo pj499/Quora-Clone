@@ -17,7 +17,6 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../hooks";
-import {connect} from "react-redux"
 
 function Navbar(props) {
   const handleLogout = async (e) => {
@@ -45,6 +44,10 @@ function Navbar(props) {
     progress: undefined,
     theme: "dark",
   };
+
+  useEffect(()=>{
+    
+  }, [])
   return (
     <>
       <div className={styles.NavbarContainer}>
@@ -212,12 +215,6 @@ function Navbar(props) {
     </>
   );
 }
-const mapStateToProps = state => ({
-  ...state
-});
 
-const mapDispatchToProps = dispatch => ({
-  fetchQuestions: () => dispatch(fetchQuestions)
-});
-export default connect()(Navbar);
+export default Navbar
 

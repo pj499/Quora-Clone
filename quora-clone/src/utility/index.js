@@ -55,16 +55,16 @@ export const getUser= async ()=>{
   return response;
 }
 
-export async function fetchingQuestions() {
+
+export const getQuestionsFromDB= async ()=>{
   const url = "http://localhost:8000/fetchQuestions";
-  var response = await fetch(url, {
-    method: 'GET',
+  const response = await fetch(url, {
+    method: "GET",
     headers: {
       "Content-type": "application/json",
     },
-  }
-  )
-  var response2 = await response.json();
-  console.log("response: ", response2);
-  return response2;
+  });
+  const responseJSON= await response.json();
+  console.log('response in reducer', responseJSON.questions)
+  return responseJSON.questions
 }

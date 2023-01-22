@@ -110,7 +110,7 @@ function HomePage() {
             handleIsAddQuestion={handleIsAddQuestion}
             />
 
-          <div onClick={()=> {setProfileDropDown(false)}}>
+          <div onClick={()=> {setProfileDropDown(false)}} className={styles.hompagePages}>
             {clickState.home && <Home handleIsAddAnswer={handleIsAddAnswer}/>}
             {clickState.following && <Following/>}
             {clickState.answer && <Answer/>}

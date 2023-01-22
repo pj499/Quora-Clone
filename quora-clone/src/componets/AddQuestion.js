@@ -6,14 +6,17 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import styles from "../styles/AddQuestion.module.css";
 import { useAuth } from "../hooks";
-import { fetchingQuestions } from "../utility";
-import { connect } from "react-redux";
+import { useSelector, useDispatch, connect} from "react-redux";
+import fetchQuestionsActionFunction from "../actions/index";
+import { getQuestionsFromDB } from "../utility";
 
 function AddQuestion(props) {
+  const [goNext, setGoNext] = useState(false);
   const [addQuestionBox, setAddQuestionBox] = useState(true);
   const [createPostBox, setCreatePostBox] = useState(false);
   const [question, setQuestion] = useState("");
   const [isAddQuestion, setIsAddQuestion] = useState(false);
+  const dispatch = useDispatch();
 
   const auth = useAuth();
   var toastInfo = {
@@ -49,9 +52,8 @@ function AddQuestion(props) {
 
     console.log("response in add Q", response);
     if(response.status==200){
-      let questions= await fetchingQuestions();
-      console.log("questions in add question: ",questions);
-      props.fetchQuestions = questions.questions;
+      let q= await getQuestionsFromDB();
+      dispatch(fetchQuestionsActionFunction(q));
       
       toast.success('Question Added Successfully!', toastInfo)
       props.handleAddQuestionClose();
@@ -228,6 +230,7 @@ function AddQuestion(props) {
               <button
                 type="submit"
                 className={signinStyles.formLoginButton}
+                disabled={!goNext}
                 style={{
                   width: "15%",
                   height: "12%",
@@ -246,11 +249,4 @@ function AddQuestion(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  ...state
-});
-
-const mapDispatchToProps = dispatch => ({
-  fetchQuestions: () => dispatch(fetchingQuestions)
-});
-export default connect(mapStateToProps,mapDispatchToProps)(AddQuestion);
+export default AddQuestion;

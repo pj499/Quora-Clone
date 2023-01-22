@@ -27,10 +27,10 @@ const DisplayQuestion = (props) => {
               fontFamily: "Cantarell, Helvetica Neue, sans-serif",
             }}
           >
-            Prajakta Pikale
+            {props.question.askedByName}
           </h6>
         </div>
-        <h2 className={styles.questionHeading}>Who is Snoopy?</h2>
+        <h2 className={styles.questionHeading}>{props.question.question}</h2>
         <div className={styles.questionActions}>
           <button
             className={styles.answerButton}

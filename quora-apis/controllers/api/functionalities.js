@@ -32,7 +32,7 @@ module.exports.addQuestion= async function(req, res){
 
 module.exports.fetchQuestions =async function(req, res){
     try {
-        let questions = await Question.find({})
+        let questions = await Question.find({}).sort({createdAt: -1})
         console.log("questions: ",questions);
         return res.status(200).send({
             message: 'Questions fetched Successfully!',

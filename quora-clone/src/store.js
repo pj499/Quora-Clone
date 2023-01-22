@@ -1,12 +1,6 @@
-import {createStore} from 'redux' 
-import fetchReducer from './reducers/fetchReducer'
+import { createStore } from "redux";
+import rootReducer from "./reducers/index";
 
-var defaultQuestionState={
-    questions: []
-};
+const store= createStore(rootReducer);
 
-function configureStore(){
-    return createStore(fetchReducer, defaultQuestionState)
-}
-
-export default configureStore;
+export default store

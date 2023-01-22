@@ -1,11 +1,10 @@
 .homeContainer{
+    box-sizing: border-box;
     width: 100vw;
     height: 100vh;
-    padding-top: 30px;
+    padding-top: 25px;
+    padding-bottom: 50px;
     overflow-y: auto;
     background-color: #f1f2f2;
     z-index: 1;
 }
-/* .homeContent{
-
-} */
