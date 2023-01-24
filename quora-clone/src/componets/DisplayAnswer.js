@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faComment } from "@fortawesome/free-solid-svg-icons";
 
-const DisplayAnswer = () => {
+const DisplayAnswer = (props) => {
   const [showmore, setShowmore] = useState(false);
 let text= `Snoopy is a beagle! In the beginning, Snoopy wasn’t drawn to be a beagle intentionally. He was actually modeled on one of Charles M. Schulz’s childhood dogs (who wasn’t a beagle!), named Spike, who was a pointer mix of some kind. In fact, it wasn’t until 1960 that it was revealed that Snoopy was a beagle. The first mention was published 12/5/1960. Peanuts had been running daily for over a decade at that point. 
 

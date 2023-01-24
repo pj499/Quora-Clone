@@ -28,7 +28,7 @@ const Home = (props) => {
     <div className={styles.homeContainer}>
       <div className={styles.homeContent}>
         {questions.length > 0
-          ? questions.map((question) => <DisplayQuestion question={question} handleIsAddAnswer={props.handleIsAddAnswer}/>)
+          ? questions.map((question) => <DisplayQuestion question={question} handleIsAddAnswer={props.handleIsAddAnswer} key={question._id} handleSelectedQuestion={props.handleSelectedQuestion}/>)
           : "No Questions"}
       </div>
     </div>

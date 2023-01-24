@@ -25,6 +25,7 @@ function HomePage() {
   const [profileDropDown, setProfileDropDown] = useState(false);
   const [isAddQuestion, setIsAddQuestion] = useState(false);
   const [isAddAnswer, setIsAddAnswer] = useState(false);
+  const [selectedQuestion,setSelectedQuestion] = useState({});
 
   const handleClick={
     homeClick: function handleHomeClick(){
@@ -66,7 +67,13 @@ function HomePage() {
   }
 
   function handleIsAddAnswer(){
+    console.log("yeh bhi call horaha kya?")
     setIsAddAnswer(true)
+    // setSelectedQuestion(question);
+  }
+
+  function handleSelectedQuestion(question){
+    setSelectedQuestion(question)
   }
   
   function handleAddQuestionClose(){
@@ -74,7 +81,9 @@ function HomePage() {
   }
 
   function handleAddAnswerClose(){
+    console.log("yaha ayya")
     setIsAddAnswer(false)
+    console.log("isAddAnswer", isAddAnswer)
   }
   
   useEffect(() => {
@@ -99,7 +108,7 @@ function HomePage() {
     return (
       <>
         {isAddQuestion && <AddQuestion handleAddQuestionClose={handleAddQuestionClose}/>}
-        {isAddAnswer && <AddAnswer handleAddAnswerClose={handleAddAnswerClose}/>}
+        {isAddAnswer && <AddAnswer handleAddAnswerClose={handleAddAnswerClose} selectedQuestion={selectedQuestion}/>}
         <div className={styles.homepageContainer}>
           <Navbar 
             onClick={handleClick} 
@@ -111,7 +120,7 @@ function HomePage() {
             />
 
           <div onClick={()=> {setProfileDropDown(false)}} className={styles.hompagePages}>
-            {clickState.home && <Home handleIsAddAnswer={handleIsAddAnswer}/>}
+            {clickState.home && <Home handleIsAddAnswer={handleIsAddAnswer} handleSelectedQuestion={handleSelectedQuestion}/>}
             {clickState.following && <Following/>}
             {clickState.answer && <Answer/>}
             {clickState.spaces && <Spaces/>}

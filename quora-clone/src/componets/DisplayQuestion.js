@@ -4,8 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faComment } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../hooks";
 import DisplayAnswer from "./DisplayAnswer";
+import { useSelector } from "react-redux";
 
 const DisplayQuestion = (props) => {
+  // const questions = useSelector((state)=>state.fetchQuestions);
+
   return (
     <>
       <div className={styles.questionContainer}>
@@ -34,7 +37,7 @@ const DisplayQuestion = (props) => {
         <div className={styles.questionActions}>
           <button
             className={styles.answerButton}
-            onClick={props.handleIsAddAnswer}
+            onClick={()=>{props.handleIsAddAnswer();props.handleSelectedQuestion(props.question)}}
           >
             <FontAwesomeIcon icon={faPenToSquare} size="lg" color="#636466" />
             <p>Answer</p>
@@ -48,8 +51,10 @@ const DisplayQuestion = (props) => {
             />
           </div>
         </div>
-
-        <DisplayAnswer />
+        {props.question.answers.length>0?props.question.answers.map((answer)=>{
+          <DisplayAnswer answer={answer}/>
+        }):"No Answers"}
+        
       </div>
 
       

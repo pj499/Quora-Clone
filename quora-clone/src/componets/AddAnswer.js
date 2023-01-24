@@ -42,6 +42,7 @@ function AddQuestion(props) {
     e.preventDefault();
     const url = "http://localhost:8000/addAnswer";
     const dataToSubmit = {
+      answerOfQuestion:props.selectedQuestion,
       answer,
       answeredBy: auth.user.email,
     };
@@ -56,7 +57,7 @@ function AddQuestion(props) {
     console.log("response in add Ans", response);
     if (response.status == 200) {
       toast.success('Answer Added Successfully!', toastInfo)
-      props.handleAddQuestionClose();
+      props.handleAddAnswerClose();
     } else if (response.status == 400) {
       toast.error('Cannot add answer, try again!', toastInfo)
     }
@@ -85,7 +86,7 @@ function AddQuestion(props) {
             action=""
             method="post"
             style={{ width: "100%", height: "350px" }}
-            // onSubmit={handleAnswerSubmit}
+            onSubmit={handleAnswerSubmit}
           >
             <div className={styles.addQuestionContent}>
               <div className={styles.profileInfo}>
@@ -110,7 +111,7 @@ function AddQuestion(props) {
               </div>
               <div className={styles.showQuestionDiv}>
                 <h4 style={{margin:"0px"}}>
-                  Who won the world cup?
+                  {props.selectedQuestion.question}
                 </h4>
               </div>
               <textarea

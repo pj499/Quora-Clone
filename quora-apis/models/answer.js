@@ -7,6 +7,9 @@ const answerSchema= new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    answeredByName:{
+        type: String
+    },
     answerOfQuestion:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Question'
@@ -16,7 +19,8 @@ const answerSchema= new mongoose.Schema({
         ref: 'Comment'
     }],
     upvotes:{
-        type: Number
+        type: Number,
+        default:0
     }
 })
 
