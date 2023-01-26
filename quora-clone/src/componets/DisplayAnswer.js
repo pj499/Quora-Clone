@@ -3,14 +3,14 @@ import styles from "../styles/DisplayAnswer.module.css";
 import questionStyles from "../styles/DisplayQuestion.module.css";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faComment } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faComment, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 
 const DisplayAnswer = (props) => {
   const [showmore, setShowmore] = useState(false);
 
   let text = props.answer.answer;
 
-  useEffect(() => {}, [showmore]);
+  useEffect(() => { }, [showmore]);
 
   return (
     <div className={styles.answerContainer}>
@@ -48,7 +48,24 @@ const DisplayAnswer = (props) => {
             {showmore ? "Show Less" : "Show More"}
           </button>
         )}
-        
+      </div>
+      <div className={styles.answerActions}>
+        <div className={styles.answerIcon}>
+          <FontAwesomeIcon
+            icon={faComment}
+            size="lg"
+            color="#DBD9D9"
+            style={{ paddingTop: "5px" }}
+          />
+        </div>
+        <div className={styles.answerIcon}>
+          <FontAwesomeIcon
+            icon={faThumbsUp}
+            size="lg"
+            color="#DBD9D9"
+            style={{ paddingTop: "5px" }}
+          />
+        </div>
       </div>
     </div>
   );

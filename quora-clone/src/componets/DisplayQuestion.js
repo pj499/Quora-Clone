@@ -1,15 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/DisplayQuestion.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faComment } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faComment, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../hooks";
 import DisplayAnswer from "./DisplayAnswer.js";
 import { useSelector } from "react-redux";
 
 const DisplayQuestion = (props) => {
+  const [answerCounter, setAnswerCounter] = useState(1);
   useEffect(() => {
-  }, [])
-  
+    console.log("ac", answerCounter);
+  }, [answerCounter])
+
   return (
     <>
       <div className={styles.questionContainer}>
@@ -27,7 +29,7 @@ const DisplayQuestion = (props) => {
           <h6 className={styles.userName}
             style={{
               paddingLeft: "10px",
-              paddingTop:"5px",
+              paddingTop: "5px",
               fontFamily: "Cantarell, Helvetica Neue, sans-serif",
             }}
           >
@@ -38,7 +40,7 @@ const DisplayQuestion = (props) => {
         <div className={styles.questionActions}>
           <button
             className={styles.answerButton}
-            onClick={()=>{props.handleIsAddAnswer();props.handleSelectedQuestion(props.question)}}
+            onClick={() => { props.handleIsAddAnswer(); props.handleSelectedQuestion(props.question) }}
           >
             <FontAwesomeIcon icon={faPenToSquare} size="lg" color="#636466" />
             <p>Answer</p>
@@ -52,13 +54,21 @@ const DisplayQuestion = (props) => {
             />
           </div>
         </div>
-        {props.question.answers.length>0 ? props.question.answers.map((answer)=> 
-          <DisplayAnswer answer={answer} key={answer._id}/>
-        ): "No Answers"}
-        
+        {props.question.answers.length > 0 ? props.question.answers.slice(0, answerCounter).map((answer) =>
+          <DisplayAnswer answer={answer} key={answer._id} />
+        ) : "No Answers"}
+        {answerCounter < props.question.answers.length  && <div className={styles.loadAnswers}>
+          <FontAwesomeIcon onClick={()=>setAnswerCounter(answerCounter+1)}
+            icon={faCirclePlus}
+            size="lg"
+            color="#DBD9D9"
+            style={{ paddingTop: "5px",cursor:"pointer" }}
+            className={styles.loadAnswerButton}
+          />
+        </div>}
       </div>
 
-      
+
     </>
   );
 };
