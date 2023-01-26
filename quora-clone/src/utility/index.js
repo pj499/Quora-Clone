@@ -65,22 +65,23 @@ export const getQuestionsFromDB= async ()=>{
     },
   });
   const responseJSON= await response.json();
-  console.log('response in reducer', responseJSON.questions)
   return responseJSON.questions
 }
-export const getAnswersFromDB= async (answers)=>{
-  const url = "http://localhost:8000/fetchAnswers";
-  const dataToSubmit={
-    answers
-  }
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify(dataToSubmit)
-  });
-  const responseJSON= await response.json();
-  console.log('response in reducer', responseJSON.questions)
-  return responseJSON.questions
-}
+
+//uselesssssssss
+// export const getAnswersFromDB= async (answers)=>{
+//   const url = "http://localhost:8000/fetchAnswers";
+//   const dataToSubmit={
+//     answers
+//   }
+//   const response = await fetch(url, {
+//     method: "POST",
+//     headers: {
+//       "Content-type": "application/json",
+//     },
+//     body: JSON.stringify(dataToSubmit)
+//   });
+//   const responseJSON= await response.json();
+//   console.log('response of answers', responseJSON.answers)
+//   return responseJSON.answers
+// }

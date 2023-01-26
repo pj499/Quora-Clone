@@ -10,6 +10,9 @@ const answerSchema= new mongoose.Schema({
     answeredByName:{
         type: String
     },
+    answeredByAvatar:{
+        type: String
+    },
     answerOfQuestion:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Question'

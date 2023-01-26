@@ -16,7 +16,6 @@ const Home = (props) => {
     let q;
     async function getQues(){
       q= await getQuestionsFromDB();
-
       //dispatch is used to to trigger actions
       dispatch(fetchQuestionsActionFunction(q));
     }

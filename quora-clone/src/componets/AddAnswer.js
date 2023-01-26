@@ -6,12 +6,15 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import styles from "../styles/AddQuestion.module.css";
 import { useAuth } from "../hooks";
+import { useSelector, useDispatch, connect } from "react-redux";
+import fetchQuestionsActionFunction from "../actions/index";
+import { getQuestionsFromDB } from "../utility";
 
 function AddQuestion(props) {
   const [addAnswerBox, setAddAnswerBox] = useState(true);
   const [answer, setAnswer] = useState("");
   const [isAddAnswer, setIsAddAnswer] = useState(false);
-
+  const dispatch = useDispatch();
   const auth = useAuth();
   var toastInfo = {
     position: "top-right",
@@ -42,7 +45,7 @@ function AddQuestion(props) {
     e.preventDefault();
     const url = "http://localhost:8000/addAnswer";
     const dataToSubmit = {
-      answerOfQuestion:props.selectedQuestion,
+      answerOfQuestion: props.selectedQuestion,
       answer,
       answeredBy: auth.user.email,
     };
@@ -56,10 +59,13 @@ function AddQuestion(props) {
 
     console.log("response in add Ans", response);
     if (response.status == 200) {
-      toast.success('Answer Added Successfully!', toastInfo)
+      let q = await getQuestionsFromDB();
+      dispatch(fetchQuestionsActionFunction(q));
+
+      toast.success("Answer Added Successfully!", toastInfo);
       props.handleAddAnswerClose();
     } else if (response.status == 400) {
-      toast.error('Cannot add answer, try again!', toastInfo)
+      toast.error("Cannot add answer, try again!", toastInfo);
     }
   };
 
@@ -81,7 +87,6 @@ function AddQuestion(props) {
           <FontAwesomeIcon icon={faXmark} size="lg" />
         </button>
         <div className={signUpStyles.signUpInfo}>
-
           <form
             action=""
             method="post"
@@ -110,13 +115,16 @@ function AddQuestion(props) {
                 />
               </div>
               <div className={styles.showQuestionDiv}>
-                <h4 style={{margin:"0px"}}>
+                <h4 style={{ margin: "0px" }}>
                   {props.selectedQuestion.question}
                 </h4>
               </div>
               <textarea
                 className={styles.createPostBoxTextarea}
-                onChange={(e) => { handleAnswer(e.target.value); handleTextarea(e); }}
+                onChange={(e) => {
+                  handleAnswer(e.target.value);
+                  handleTextarea(e);
+                }}
                 placeholder="Say something..."
               ></textarea>
             </div>
@@ -154,7 +162,6 @@ function AddQuestion(props) {
               Post
             </button>
           </form>
-
         </div>
       </div>
     </>

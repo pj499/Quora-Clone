@@ -1,24 +1,34 @@
-const mongoose= require('mongoose');
-const questionSchema= new mongoose.Schema({
-    question:{
-        type: String
+const mongoose = require("mongoose");
+const questionSchema = new mongoose.Schema(
+  {
+    question: {
+      type: String,
     },
-    answers:[{
+    answers: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Answer'
-    }],
-    askedBy:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: "Answer",
+      },
+    ],
+    askedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    askedByName:{
-        type: String
+    askedByName: {
+      type: String,
     },
-    comments: [{
+    askedByAvatar: {
+      type: String,
+    },
+    comments: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment'
-    }]
-},{timestamps: true})
+        ref: "Comment",
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-const Question= mongoose.model('Question', questionSchema);
-module.exports= Question;
+const Question = mongoose.model("Question", questionSchema);
+module.exports = Question;

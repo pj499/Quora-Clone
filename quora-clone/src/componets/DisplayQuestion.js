@@ -1,20 +1,21 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styles from "../styles/DisplayQuestion.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faComment } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../hooks";
-import DisplayAnswer from "./DisplayAnswer";
+import DisplayAnswer from "./DisplayAnswer.js";
 import { useSelector } from "react-redux";
 
 const DisplayQuestion = (props) => {
-  // const questions = useSelector((state)=>state.fetchQuestions);
-
+  useEffect(() => {
+  }, [])
+  
   return (
     <>
       <div className={styles.questionContainer}>
         <div className={styles.profileInfo}>
           <img
-            src="https://i.pinimg.com/originals/46/e7/9a/46e79ad5103cc80833f68c308925fb21.jpg"
+            src={props.question.askedByAvatar}
             alt=""
             referrerPolicy="no-referrer"
             style={{
@@ -51,9 +52,9 @@ const DisplayQuestion = (props) => {
             />
           </div>
         </div>
-        {props.question.answers.length>0?props.question.answers.map((answer)=>{
-          <DisplayAnswer answer={answer}/>
-        }):"No Answers"}
+        {props.question.answers.length>0 ? props.question.answers.map((answer)=> 
+          <DisplayAnswer answer={answer} key={answer._id}/>
+        ): "No Answers"}
         
       </div>
 

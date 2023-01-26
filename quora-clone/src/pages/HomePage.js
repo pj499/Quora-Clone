@@ -67,9 +67,7 @@ function HomePage() {
   }
 
   function handleIsAddAnswer(){
-    console.log("yeh bhi call horaha kya?")
     setIsAddAnswer(true)
-    // setSelectedQuestion(question);
   }
 
   function handleSelectedQuestion(question){
@@ -81,9 +79,7 @@ function HomePage() {
   }
 
   function handleAddAnswerClose(){
-    console.log("yaha ayya")
     setIsAddAnswer(false)
-    console.log("isAddAnswer", isAddAnswer)
   }
   
   useEffect(() => {
@@ -104,7 +100,6 @@ function HomePage() {
   if (!auth.user || auth.loading) {
     return <h1>Wait for cutesss!!</h1>
   } else {
-    {console.log('auth user',auth.user)}
     return (
       <>
         {isAddQuestion && <AddQuestion handleAddQuestionClose={handleAddQuestionClose}/>}

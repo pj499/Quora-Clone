@@ -33,4 +33,5 @@ router.post('/addQuestion', functionalitites.addQuestion);
 router.post('/addAnswer', functionalitites.addAnswer);
 router.get('/fetchQuestions',functionalitites.fetchQuestions);
 
+
 module.exports= router;
