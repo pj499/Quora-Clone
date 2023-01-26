@@ -32,6 +32,10 @@ function Navbar(props) {
     }
   };
 
+  const handleProfilePage= ()=>{
+    navigate(`/userProfile/:userId`)
+  }
+
   const auth = useAuth();
   let navigate = useNavigate();
   var toastInfo = {
@@ -141,7 +145,7 @@ function Navbar(props) {
           </div>
           {props.profileDropDown && (
             <div className={styles.profileDropDown}>
-              <div className={styles.dropDownProfilePic}>
+              <div className={styles.dropDownProfilePic} onClick={handleProfilePage}>
                 <img
                   src={auth.user.avatar}
                   alt=""

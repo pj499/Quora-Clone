@@ -3,7 +3,7 @@
     /* height: 300px; */
     /* border: 1px solid purple; */
     margin: 15px 0;
-    box-shadow: 0px 0px 2px 2px #f1f1f1;
+    box-shadow: 0px 0px 5px 2px #f1f1f1;
     padding: 10px;
     box-sizing: border-box;
     border-radius: 5px;
@@ -55,7 +55,6 @@
     border-radius: 10px;
     cursor: pointer;
     text-align: center;
-    /* margin-left: 10px; */
 }
 .answerIcon:hover{
     background-color: #f7f7f7;

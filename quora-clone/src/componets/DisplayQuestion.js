@@ -7,9 +7,18 @@ import DisplayAnswer from "./DisplayAnswer.js";
 import { useSelector } from "react-redux";
 
 const DisplayQuestion = (props) => {
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+
+  let d= new Date(props.question.createdAt);
+  let questionYear= d.getFullYear();
+  let questionMonth= monthNames[d.getMonth()];
+  let questionDate= d.getDate();
+
+
   const [answerCounter, setAnswerCounter] = useState(1);
   useEffect(() => {
-    console.log("ac", answerCounter);
   }, [answerCounter])
 
   return (
@@ -26,15 +35,21 @@ const DisplayQuestion = (props) => {
               borderRadius: "50px",
             }}
           ></img>
-          <h6 className={styles.userName}
-            style={{
-              paddingLeft: "10px",
-              paddingTop: "5px",
-              fontFamily: "Cantarell, Helvetica Neue, sans-serif",
-            }}
-          >
-            {props.question.askedByName}
-          </h6>
+          <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
+            <h6 className={styles.userName}
+              style={{
+                paddingLeft: "10px",
+                paddingTop: "5px",
+                fontFamily: "Cantarell, Helvetica Neue, sans-serif",
+                margin: 0
+              }}
+            >
+              {props.question.askedByName}
+            </h6>
+            <pre style={{margin: 0, fontSize: 'smaller', paddingLeft: '10px'}}>{questionDate} {questionMonth} {questionYear}</pre>
+          </div>
+          
+
         </div>
         <h2 className={styles.questionHeading}>{props.question.question}</h2>
         <div className={styles.questionActions}>

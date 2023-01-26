@@ -14,14 +14,12 @@
 .NavbarContentDiv{
     height:100%;
     width: 80%;
-    /* border:1px solid red; */
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 .IconDiv{
     padding: 10px;
-    /* border: 1px solid red; */
 }
 .IconDiv:hover{
     cursor: pointer;
@@ -114,7 +112,8 @@
     height: 50%;
     box-sizing: border-box;
     border-bottom: 1px solid lightgray;
-    padding:10px 10px;   
+    padding:10px 10px;  
+    cursor: pointer; 
 }
 .dropDownProfilePic:hover{
     opacity: 0.7;

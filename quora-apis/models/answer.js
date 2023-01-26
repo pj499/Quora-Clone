@@ -25,7 +25,7 @@ const answerSchema= new mongoose.Schema({
         type: Number,
         default:0
     }
-})
+}, {timestamps: true})
 
 const Answer= mongoose.model('Answer', answerSchema);
 module.exports= Answer;

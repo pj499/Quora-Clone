@@ -7,10 +7,13 @@ import { faPenToSquare, faComment, faThumbsUp } from "@fortawesome/free-solid-sv
 
 const DisplayAnswer = (props) => {
   const [showmore, setShowmore] = useState(false);
+  const [liked, setLiked]= useState(false);
 
   let text = props.answer.answer;
 
-  useEffect(() => { }, [showmore]);
+  useEffect(() => {
+    
+   }, [showmore]);
 
   return (
     <div className={styles.answerContainer}>
@@ -58,13 +61,15 @@ const DisplayAnswer = (props) => {
             style={{ paddingTop: "5px" }}
           />
         </div>
-        <div className={styles.answerIcon}>
+        <div className={styles.answerIcon} >
           <FontAwesomeIcon
             icon={faThumbsUp}
             size="lg"
-            color="#DBD9D9"
+            color={liked?  "#81A2F6":"#DBD9D9"}
             style={{ paddingTop: "5px" }}
+            onClick={()=>{ setLiked(!liked); console.log('liked?', liked);}}
           />
+          {/* <pre>0 likes</pre> */}
         </div>
       </div>
     </div>
