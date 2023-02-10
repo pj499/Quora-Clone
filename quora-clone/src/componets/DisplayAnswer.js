@@ -4,16 +4,30 @@ import questionStyles from "../styles/DisplayQuestion.module.css";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faComment, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router";
 
 const DisplayAnswer = (props) => {
   const [showmore, setShowmore] = useState(false);
-  const [liked, setLiked]= useState(false);
+  const [liked, setLiked] = useState(false);
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+
+  let d= new Date(props.answer.createdAt);
+  let answerYear= d.getFullYear();
+  let answerMonth= monthNames[d.getMonth()];
+  let answerDate= d.getDate();
+  const navigate= useNavigate();
 
   let text = props.answer.answer;
 
+  const handleUserProfilePage= ()=>{
+    navigate(`/userProfile/${props.answer.answeredBy}`)
+  }
+
   useEffect(() => {
-    
-   }, [showmore]);
+
+  }, [showmore]);
 
   return (
     <div className={styles.answerContainer}>
@@ -26,16 +40,24 @@ const DisplayAnswer = (props) => {
             width: "25px",
             height: "25px",
             borderRadius: "50px",
+            cursor:'pointer'
           }}
+          onClick={()=> handleUserProfilePage()}
         ></img>
-        <h6
-          style={{
-            paddingLeft: "10px",
-            fontFamily: "Cantarell, Helvetica Neue, sans-serif",
-          }}
-        >
-          {props.answer.answeredByName}
-        </h6>
+        <div className={styles.nameDate}>
+          <h6
+            style={{
+              // paddingLeft: "10px",
+              margin:0,
+              fontFamily: "Cantarell, Helvetica Neue, sans-serif",
+              cursor:'pointer'
+            }}
+            onClick={()=> handleUserProfilePage()}
+          >
+            {props.answer.answeredByName}
+          </h6>
+          <pre style={{margin:'0',marginTop:'2px',fontSize:'smaller'}}>{answerDate} {answerMonth} {answerYear}</pre>
+        </div>
       </div>
 
       <div className={styles.answerContent}>
@@ -65,9 +87,9 @@ const DisplayAnswer = (props) => {
           <FontAwesomeIcon
             icon={faThumbsUp}
             size="lg"
-            color={liked?  "#81A2F6":"#DBD9D9"}
+            color={liked ? "#81A2F6" : "#DBD9D9"}
             style={{ paddingTop: "5px" }}
-            onClick={()=>{ setLiked(!liked); console.log('liked?', liked);}}
+            onClick={() => { setLiked(!liked); console.log('liked?', liked); }}
           />
           {/* <pre>0 likes</pre> */}
         </div>

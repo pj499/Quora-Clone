@@ -59,3 +59,13 @@
 .answerIcon:hover{
     background-color: #f7f7f7;
 }
+
+.nameDate{
+    /* border:1px solid black; */
+    padding: 3px;
+    height:30px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    margin-left: 5px;
+}

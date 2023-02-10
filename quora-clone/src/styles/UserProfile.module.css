@@ -1,5 +1,43 @@
 .profileContainer{
     width: 60%;
+    height: 100vh;
     margin: auto;
-    border: 1px solid red;
+    /* border: 1px solid red; */
+    margin-top: 60px;
+}
+.userProfileInfo{
+    width: 100%;
+    height: 150px;
+    border: 1px solid green;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap:20px;
+}
+
+.profileImg{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px solid pink;
+}
+
+.userInfo{
+    width: 80%;
+    height: 80%;
+    border:1px solid red;
+    display: flex;
+    flex-direction: column;
+}
+
+.followButton{
+    width: 100px;
+    height:34px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    background-color:#1a5aff;
+    color: white;
+    padding-bottom: 2px;
+    cursor: pointer;
 }

@@ -16,7 +16,7 @@ const DisplayQuestion = (props) => {
   let questionYear= d.getFullYear();
   let questionMonth= monthNames[d.getMonth()];
   let questionDate= d.getDate();
-  const navigate= useNavigate()
+  const navigate= useNavigate();
 
   const handleUserProfilePage= ()=>{
     navigate(`/userProfile/${props.question.askedBy}`)
@@ -38,10 +38,12 @@ const DisplayQuestion = (props) => {
               width: "25px",
               height: "25px",
               borderRadius: "50px",
+              cursor:"pointer"
             }}
+            onClick={()=> handleUserProfilePage()}
           ></img>
           <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
-            <h6 className={styles.userName} onClick={()=> props.setIsUserProfilePage(true)}
+            <h6 className={styles.userName} onClick={()=> handleUserProfilePage()}
               style={{
                 paddingLeft: "10px",
                 paddingTop: "5px",
