@@ -4,7 +4,7 @@
     background-color: black;
     opacity: 0.8;
     position:absolute;
-    z-index: 1;
+    z-index: 2;
 }
 .signUpBox{
     width:40%;
@@ -17,7 +17,7 @@
     left:30%;
     transform: translateY(-50%);
     border-radius: 5px;
-    z-index: 2;
+    z-index: 3;
 }
 .signupCloseButton{
     width: 40px;
@@ -28,7 +28,7 @@
     cursor: pointer;
     background-color: white;
     position: relative;
-    right: 45%;
+    right: -2%;
     top: 10px;
 }
 .signupCloseButton:hover{

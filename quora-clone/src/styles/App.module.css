@@ -1,17 +1,19 @@
-.homepageContainer{
+.appContainer{
     box-sizing: border-box;
     height:100vh;
     width: 100vw;
-    
+
     position:relative;
-    z-index: 0;
+    /* z-index: 0; */
     font-family:  'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+/* GIVE THIS TO ALL PAGESS */
 .hompagePages{
     box-sizing: border-box;
     position: relative;
-    bottom: -30px;
-    top: 50px;
+    /* bottom: -30px; */
+    /* top: 50px; */
     overflow-y: auto;
     overflow-x: hidden;
 }

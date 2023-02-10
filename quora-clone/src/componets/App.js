@@ -1,25 +1,110 @@
-import '../styles/App.css';
-import SignIn from '../pages/SignIn';
-import {Routes, Route} from 'react-router-dom';
-import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import HomePage from '../pages/HomePage';
+import "../styles/App.css";
+import SignIn from "../pages/SignIn";
+import { Routes, Route } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import styles from "../styles/App.module.css";
 import { useAuth } from "../hooks";
-import UserProfile from '../pages/UserProfile';
+import { useState, useEffect } from "react";
+import {
+  Home,
+  Following,
+  Answer,
+  Spaces,
+  Notifications,
+  UserProfile,
+  AddQuestion,
+  AddAnswer,
+} from "../componets/index.js";
+import Navbar from "./Navbar";
 
 function App() {
   const auth = useAuth();
 
+  const [profileDropDown, setProfileDropDown] = useState(false);
+  const [isAddQuestion, setIsAddQuestion] = useState(false);
+  const [isAddAnswer, setIsAddAnswer] = useState(false);
+  const [selectedQuestion, setSelectedQuestion] = useState({});
+
+  function handleProfileDropDown() {
+    setProfileDropDown(!profileDropDown);
+  }
+
+  function handleIsAddQuestion() {
+    setIsAddQuestion(true);
+  }
+
+  function handleIsAddAnswer() {
+    setIsAddAnswer(true);
+  }
+
+  function handleSelectedQuestion(question) {
+    setSelectedQuestion(question);
+  }
+
+  function handleAddQuestionClose() {
+    setIsAddQuestion(false);
+  }
+
+  function handleAddAnswerClose() {
+    setIsAddAnswer(false);
+  }
+
+  useEffect(() => {
+    console.log("PD", profileDropDown);
+  }, [isAddQuestion, isAddAnswer, profileDropDown]);
+
   return (
-    <div className="App">
-      <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark"/>
-      <Routes>
-          <Route path='/' element={<SignIn/>}></Route>
-          <Route path='/home' element={<HomePage/>}></Route>
-          <Route path='/userProfile/:userId' element={<UserProfile/>}></Route>
-      </Routes>
-    </div>
+    <>
+      {isAddQuestion && (
+        <AddQuestion handleAddQuestionClose={handleAddQuestionClose} />
+      )}
+
+      {isAddAnswer && (
+        <AddAnswer
+          handleAddAnswerClose={handleAddAnswerClose}
+          selectedQuestion={selectedQuestion}
+        />
+      )}
+      <div className={styles.appContainer}>
+        {auth.user && (
+          <Navbar
+            profileDropDown={profileDropDown}
+            handleProfileDropDown={handleProfileDropDown}
+            isAddQuestion={isAddQuestion}
+            handleIsAddQuestion={handleIsAddQuestion}
+          />
+        )}
+
+        <div
+          className={styles.hompagePages}
+          onClick={() => {
+            setProfileDropDown(false);
+          }}
+        >
+          <Routes>
+            <Route path="/" element={<SignIn />}></Route>
+            <Route
+              path="/userProfile/:userId"
+              element={<UserProfile />}
+            ></Route>
+            <Route
+              path="/home"
+              element={
+                <Home
+                  handleIsAddAnswer={handleIsAddAnswer}
+                  handleSelectedQuestion={handleSelectedQuestion}
+                />
+              }
+            ></Route>
+            <Route path="/following" element={<Following />}></Route>
+            <Route path="/answer" element={<Answer />}></Route>
+            <Route path="/spaces" element={<Spaces />}></Route>
+            <Route path="/notifications" element={<Notifications />}></Route>
+          </Routes>
+        </div>
+      </div>
+    </>
   );
 }
 
-export default App
+export default App;

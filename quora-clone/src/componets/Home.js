@@ -6,8 +6,11 @@ import DisplayQuestion from "./DisplayQuestion.js";
 import { useSelector, useDispatch, connect} from "react-redux";
 import fetchQuestionsActionFunction from "../actions/index";
 import { getQuestionsFromDB } from "../utility";
+import UserProfile from "./UserProfile";
 
 const Home = (props) => {
+  const [isUserProfilePage, setIsUserProfilePage] = useState(false)
+
   //useSelector is used to extract data from the store
   const questions = useSelector((state) => state.fetchQuestions);
   const dispatch = useDispatch();
@@ -21,14 +24,18 @@ const Home = (props) => {
     }
     
     getQues();
-  }, []);
+  }, [isUserProfilePage]);
 
   return (
     <div className={styles.homeContainer}>
       <div className={styles.homeContent}>
-        {questions.length > 0
-          ? questions.map((question) => <DisplayQuestion question={question} handleIsAddAnswer={props.handleIsAddAnswer} key={question._id} handleSelectedQuestion={props.handleSelectedQuestion}/>)
-          : "No Questions"}
+        {isUserProfilePage ? <UserProfile/> : 
+        (questions.length > 0
+          ? questions.map((question) => <DisplayQuestion setIsUserProfilePage={setIsUserProfilePage} isUserProfilePage={isUserProfilePage}
+          question={question} handleIsAddAnswer={props.handleIsAddAnswer} key={question._id} handleSelectedQuestion={props.handleSelectedQuestion}/>)
+          : "No Questions")
+        }
+        
       </div>
     </div>
   );

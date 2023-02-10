@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import styles from "../styles/Navbar.module.css";
 import logo from "../assets/images/logo.png";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,6 +20,7 @@ import {
 import { useAuth } from "../hooks";
 
 function Navbar(props) {
+  const [selectedComponent, setSelectedComponent] = useState('')
   const handleLogout = async (e) => {
     e.preventDefault();
     let response = await auth.logout();
@@ -33,7 +35,7 @@ function Navbar(props) {
   };
 
   const handleProfilePage= ()=>{
-    navigate(`/userProfile/:userId`)
+    // navigate(`/userProfile/${}`)
   }
 
   const auth = useAuth();
@@ -50,67 +52,59 @@ function Navbar(props) {
   };
 
   useEffect(()=>{
-    
+    console.log('auth in navbar', auth)
   }, [])
   return (
     <>
       <div className={styles.NavbarContainer}>
         <div className={styles.NavbarContentDiv}>
           <img src={logo} alt="logo" style={{ width: "8%" }}></img>
-          <div className={styles.IconDiv} onClick={props.onClick.homeClick}>
+          <Link to='/home' className={styles.IconDiv} onClick={()=>setSelectedComponent('home')}
+          >
             <FontAwesomeIcon
               icon={faHouse}
               size="lg"
-              className={
-                props.clickState.home ? styles.IconSelected : styles.Icon
-              }
+              className={(selectedComponent=='home' || selectedComponent=='') ? styles.IconSelected : styles.Icon}
             />
-          </div>
-          <div
-            className={styles.IconDiv}
-            onClick={props.onClick.followingClick}
+          </Link>
+
+          <Link to='/following' 
+            className={styles.IconDiv} onClick={()=>setSelectedComponent('following')}
           >
             <FontAwesomeIcon
               icon={faBarsStaggered}
               size="lg"
-              className={
-                props.clickState.following ? styles.IconSelected : styles.Icon
-              }
+              className={selectedComponent=='following' ? styles.IconSelected : styles.Icon}
             />
-          </div>
-          <div className={styles.IconDiv} onClick={props.onClick.answerClick}>
+          </Link>
+
+          <Link to='/answer' className={styles.IconDiv} onClick={()=>setSelectedComponent('answer')}
+          >
             <FontAwesomeIcon
               icon={faPen}
               size="lg"
-              className={
-                props.clickState.answer ? styles.IconSelected : styles.Icon
-              }
+              className={selectedComponent=='answer' ? styles.IconSelected : styles.Icon}
             />
-          </div>
-          <div className={styles.IconDiv} onClick={props.onClick.spacesClick}>
+          </Link>
+
+          <Link  to='/spaces' className={styles.IconDiv} onClick={()=>setSelectedComponent('spaces')}
+          >
             <FontAwesomeIcon
               icon={faUserGroup}
               size="lg"
-              className={
-                props.clickState.spaces ? styles.IconSelected : styles.Icon
-              }
+              className={selectedComponent=='spaces' ? styles.IconSelected : styles.Icon}
             />
-          </div>
+          </Link>
 
-          <div
-            className={styles.IconDiv}
-            onClick={props.onClick.notificationsClick}
+          <Link to='/notifications' 
+            className={styles.IconDiv} onClick={()=>setSelectedComponent('notifications')}
           >
             <FontAwesomeIcon
               icon={faBell}
               size="lg"
-              className={
-                props.clickState.notifications
-                  ? styles.IconSelected
-                  : styles.Icon
-              }
+              className={selectedComponent=='notifications' ? styles.IconSelected : styles.Icon}
             />
-          </div>
+          </Link>
 
           <div className={styles.searchBox}>
             <FontAwesomeIcon

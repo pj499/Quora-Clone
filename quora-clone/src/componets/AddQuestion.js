@@ -167,7 +167,7 @@ function AddQuestion(props) {
                   height: "12%",
                   marginTop: "12px",
                   position: "relative",
-                  left: "35%",
+                  left: "70%",
                 }}
               >
                 Add Question
@@ -236,7 +236,7 @@ function AddQuestion(props) {
                   height: "12%",
                   marginTop: "12px",
                   position: "relative",
-                  left: "35%",
+                  left: "75%",
                 }}
               >
                 Post
@@ -245,6 +245,7 @@ function AddQuestion(props) {
           )}
         </div>
       </div>
+      
     </>
   );
 }

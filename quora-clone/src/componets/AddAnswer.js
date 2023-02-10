@@ -10,7 +10,7 @@ import { useSelector, useDispatch, connect } from "react-redux";
 import fetchQuestionsActionFunction from "../actions/index";
 import { getQuestionsFromDB } from "../utility";
 
-function AddQuestion(props) {
+function AddAnswer(props) {
   const [addAnswerBox, setAddAnswerBox] = useState(true);
   const [answer, setAnswer] = useState("");
   const [isAddAnswer, setIsAddAnswer] = useState(false);
@@ -141,7 +141,7 @@ function AddQuestion(props) {
               size="lg"
               style={{
                 position: "relative",
-                left: "-40%",
+                right: "0%",
                 paddingLeft: "10px",
                 color: "#636466",
                 cursor: "pointer",
@@ -156,7 +156,7 @@ function AddQuestion(props) {
                 height: "12%",
                 marginTop: "12px",
                 position: "relative",
-                left: "35%",
+                left: "75%",
               }}
             >
               Post
@@ -168,4 +168,4 @@ function AddQuestion(props) {
   );
 }
 
-export default AddQuestion;
+export default AddAnswer;

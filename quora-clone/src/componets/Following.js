@@ -2,7 +2,7 @@ import React from 'react'
 
 const Following = () => {
   return (
-    <div>Following</div>
+    <div style={{paddingTop: '200px'}}>Following</div>
   )
 }
 

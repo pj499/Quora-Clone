@@ -5,6 +5,7 @@ import { faPenToSquare, faComment, faCirclePlus } from "@fortawesome/free-solid-
 import { useAuth } from "../hooks";
 import DisplayAnswer from "./DisplayAnswer.js";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const DisplayQuestion = (props) => {
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -15,11 +16,15 @@ const DisplayQuestion = (props) => {
   let questionYear= d.getFullYear();
   let questionMonth= monthNames[d.getMonth()];
   let questionDate= d.getDate();
+  const navigate= useNavigate()
 
+  const handleUserProfilePage= ()=>{
+    navigate(`/userProfile/${props.question.askedBy}`)
+  }
 
   const [answerCounter, setAnswerCounter] = useState(1);
   useEffect(() => {
-  }, [answerCounter])
+  }, [answerCounter, props.isUserProfilePage])
 
   return (
     <>
@@ -36,7 +41,7 @@ const DisplayQuestion = (props) => {
             }}
           ></img>
           <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
-            <h6 className={styles.userName}
+            <h6 className={styles.userName} onClick={()=> props.setIsUserProfilePage(true)}
               style={{
                 paddingLeft: "10px",
                 paddingTop: "5px",

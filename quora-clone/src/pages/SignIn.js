@@ -77,7 +77,6 @@ function SignIn() {
   const handleGoogleSignIn = async() => {
     localStorage.setItem('isGoogleSignIn',true);
     window.open('http://localhost:8000/googleSignIn', '_self')
-    console.log("cute2")
   }
 
   const getUser = async () => {
