@@ -22,7 +22,7 @@ const DisplayAnswer = (props) => {
   let text = props.answer.answer;
 
   const handleUserProfilePage= ()=>{
-    navigate(`/userProfile/${props.answer.answeredBy}`)
+    navigate(`/userProfile/${props.answer.answeredBy}/questions`)
   }
 
   useEffect(() => {

@@ -21,6 +21,7 @@ import { useAuth } from "../hooks";
 
 function Navbar(props) {
   const [selectedComponent, setSelectedComponent] = useState('')
+
   const handleLogout = async (e) => {
     e.preventDefault();
     let response = await auth.logout();
@@ -34,9 +35,8 @@ function Navbar(props) {
     }
   };
 
-  const handleProfilePage= ()=>{
-    // navigate(`/userProfile/${}`)
-  }
+  
+  
 
   const auth = useAuth();
   let navigate = useNavigate();
@@ -50,6 +50,10 @@ function Navbar(props) {
     progress: undefined,
     theme: "dark",
   };
+
+  const handleProfilePage= ()=>{
+    navigate(`/userProfile/${auth.user.userId}/questions`)
+  }
 
   useEffect(()=>{
     console.log('auth in navbar', auth)

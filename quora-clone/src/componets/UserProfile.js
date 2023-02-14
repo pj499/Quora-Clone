@@ -1,25 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/UserProfile.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { Routes, Route, useNavigate, useParams, Outlet } from "react-router";
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 
 import { UserQuestions, UserAnswers } from "./index";
 
 function UserProfile() {
   const navigate = useNavigate();
   let { userId } = useParams();
-  let initialUserActivitySelection = {
-    questions: true,
-    answers: false,
-    followers: false,
-    following: false,
-  };
-  const [userActivitySelection, setUserActivitySelection] = useState(
-    initialUserActivitySelection
-  );
+  let location = useLocation();
 
+  let parameters = location.pathname.split('/');
+
+
+  useEffect(()=>{
+    // console.log('location: ',parameters);
+  })
   return (
     <>
       <div className={styles.profileContainer}>
@@ -36,7 +34,7 @@ function UserProfile() {
                 fontFamily: "helvetica",
               }}
             >
-              1,167 followers 214 following
+              1,167 followers     214 following
             </pre>
             <button className={styles.followButton}>
               <FontAwesomeIcon
@@ -63,34 +61,31 @@ function UserProfile() {
           <Link
             to={`/userProfile/${userId}/questions`}
             className={styles.eachUserActivity}
-            onClick={() =>
-              setUserActivitySelection(...initialUserActivitySelection)
-            }
+            style = {{ borderBottom:(parameters[3]==='questions') ? '4px solid #a82723':'none'}}
           >
             <h5 style={{ margin: "0" }}>Questions</h5>
           </Link>
           <Link
             to={`/userProfile/${userId}/answers`}
             className={styles.eachUserActivity}
-            onClick={() =>
-              setUserActivitySelection(
-                ...initialUserActivitySelection,
-                (initialUserActivitySelection.questions = false),
-                (initialUserActivitySelection.answers = true)
-              )
-            }
+            style = {{ borderBottom:(parameters[3]==='answers') ? '4px solid #a82723':'none'}}
+
           >
             <h5 style={{ margin: "0" }}>Answers</h5>
           </Link>
           <Link
             to={`/userProfile/${userId}/followers`}
             className={styles.eachUserActivity}
+            style = {{ borderBottom:(parameters[3]==='followers') ? '4px solid #a82723':'none'}}
+
           >
             <h5 style={{ margin: "0" }}>Followers</h5>
           </Link>
           <Link
             to={`/userProfile/${userId}/following`}
             className={styles.eachUserActivity}
+            style = {{ borderBottom:(parameters[3]==='following') ? '4px solid #a82723':'none'}}
+
           >
             <h5 style={{ margin: "0" }}>Following</h5>
           </Link>

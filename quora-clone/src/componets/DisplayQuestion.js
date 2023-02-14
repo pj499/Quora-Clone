@@ -19,7 +19,7 @@ const DisplayQuestion = (props) => {
   const navigate= useNavigate();
 
   const handleUserProfilePage= ()=>{
-    navigate(`/userProfile/${props.question.askedBy}`)
+    navigate(`/userProfile/${props.question.askedBy}/questions`)
   }
 
   const [answerCounter, setAnswerCounter] = useState(1);
