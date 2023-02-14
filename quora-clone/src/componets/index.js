@@ -6,6 +6,10 @@ import Notifications from "./Notifications";
 import UserProfile from "./UserProfile";
 import AddQuestion from "./AddQuestion";
 import AddAnswer from "./AddAnswer";
+import UserQuestions from "./UserQuestions";
+import UserAnswers from "./UserAnswers";
+import UserFollowers from "./UserFollowers";
+import UserFollowing from "./UserFollowing";
 
 export {
     Home,
@@ -15,5 +19,9 @@ export {
     Notifications,
     UserProfile,
     AddAnswer,
-    AddQuestion
+    AddQuestion,
+    UserQuestions,
+    UserAnswers,
+    UserFollowers,
+    UserFollowing
 }

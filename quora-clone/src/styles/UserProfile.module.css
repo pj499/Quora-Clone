@@ -41,3 +41,28 @@
     padding-bottom: 2px;
     cursor: pointer;
 }
+
+.userActivitySelection{
+    width: 100%;
+    height: 40px;
+    border: 1px solid red;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.eachUserActivity{
+    box-sizing: border-box;
+    width: 15%;
+    height: 100%;
+    text-align: center;
+    color: #a0a1a5;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    padding-top: 10px;
+    border-bottom: 4px solid #a82723;
+}
+.eachUserActivity:hover{
+    cursor: pointer;
+    background-color: #f7f7f7;
+}
