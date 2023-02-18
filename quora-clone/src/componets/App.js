@@ -17,7 +17,7 @@ import {
   UserAnswers,
   UserQuestions,
   UserFollowers,
-  UserFollowing
+  UserFollowing,
 } from "./index";
 import Navbar from "./Navbar";
 
@@ -53,8 +53,7 @@ function App() {
     setIsAddAnswer(false);
   }
 
-  useEffect(() => {
-  }, [isAddQuestion, isAddAnswer, profileDropDown]);
+  useEffect(() => {}, [isAddQuestion, isAddAnswer, profileDropDown]);
 
   return (
     <>
@@ -88,10 +87,16 @@ function App() {
             <Route path="/" element={<SignIn />}></Route>
 
             <Route path="/userProfile/:userId" element={<UserProfile />}>
-              <Route path="questions" element={<UserQuestions/>}></Route>
-              <Route path="answers" element={<UserAnswers/>}></Route>
-              <Route path="followers" element={<UserFollowers/>}></Route>
-              <Route path="following" element={<UserFollowing/>}></Route>
+              <Route
+                path="questions"
+                element={
+                  <UserQuestions
+                  />
+                }
+              ></Route>
+              <Route path="answers" element={<UserAnswers />}></Route>
+              <Route path="followers" element={<UserFollowers />}></Route>
+              <Route path="following" element={<UserFollowing />}></Route>
             </Route>
 
             <Route
@@ -107,8 +112,6 @@ function App() {
             <Route path="/answer" element={<Answer />}></Route>
             <Route path="/spaces" element={<Spaces />}></Route>
             <Route path="/notifications" element={<Notifications />}></Route>
-
-    
           </Routes>
         </div>
       </div>

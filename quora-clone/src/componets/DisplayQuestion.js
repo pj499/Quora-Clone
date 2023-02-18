@@ -5,7 +5,7 @@ import { faPenToSquare, faComment, faCirclePlus } from "@fortawesome/free-solid-
 import { useAuth } from "../hooks";
 import DisplayAnswer from "./DisplayAnswer.js";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate,useParams } from "react-router";
 
 const DisplayQuestion = (props) => {
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -18,17 +18,19 @@ const DisplayQuestion = (props) => {
   let questionDate= d.getDate();
   const navigate= useNavigate();
 
+  let {userId}= useParams();
+
   const handleUserProfilePage= ()=>{
     navigate(`/userProfile/${props.question.askedBy}/questions`)
   }
 
   const [answerCounter, setAnswerCounter] = useState(1);
   useEffect(() => {
-  }, [answerCounter, props.isUserProfilePage])
+  }, [answerCounter])
 
   return (
     <>
-      <div className={styles.questionContainer}>
+      <div className={styles.questionContainer} style={{width: userId && '80%'}}>
         <div className={styles.profileInfo}>
           <img
             src={props.question.askedByAvatar}

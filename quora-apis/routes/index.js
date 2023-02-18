@@ -3,6 +3,8 @@ const router= express.Router();
 const firstAPI= require("../controllers/index")
 const authentication= require('../controllers/api/authentication');
 const functionalitites= require('../controllers/api/functionalities')
+const userprofile= require('../controllers/api/userprofile');
+
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const User = require('../models/users')
@@ -29,9 +31,15 @@ router.get('/googleSignIn/callback', passport.authenticate('google', {
     successRedirect:'http://localhost:3000/', 
     failureRedirect: '/googleLogin/failed'
 }))
+
+
+
+
+
 router.post('/addQuestion', functionalitites.addQuestion);
 router.post('/addAnswer', functionalitites.addAnswer);
 router.get('/fetchQuestions',functionalitites.fetchQuestions);
-
+router.get('/:userId', userprofile.fetchUserProfileInfo)
+router.get('/:userId/userProfileQuestions', userprofile.fetchUserProfileQuestions)
 
 module.exports= router;

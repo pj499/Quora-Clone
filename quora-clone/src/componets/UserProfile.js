@@ -4,28 +4,47 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { Routes, Route, useNavigate, useParams, Outlet } from "react-router";
 import { Link,useLocation } from "react-router-dom";
-
 import { UserQuestions, UserAnswers } from "./index";
 
 function UserProfile() {
   const navigate = useNavigate();
   let { userId } = useParams();
   let location = useLocation();
-
   let parameters = location.pathname.split('/');
+  const [userInfo, setUserInfo]=useState({});
 
+  const getUserProfileHeaderInfo= async ()=>{
+    const url= `http://localhost:8000/${userId}`;
+   
+    const response= await fetch(url, {
+      method: 'GET',
+      headers: {
+        "Content-type": "application/json",
+      }
+    })
+    const response2= await response.json();
+    console.log('getUserProfileHeaderInfo', response2.data.user);
+    if(response.status===200){
+      setUserInfo(response2.data.user);
+    }
+    if(response.status===409){
+      
+    }
+    
+  }
 
   useEffect(()=>{
-    // console.log('location: ',parameters);
-  })
+    getUserProfileHeaderInfo();
+  }, [])
+
   return (
     <>
       <div className={styles.profileContainer}>
         <div className={styles.userProfileInfo}>
-          <div className={styles.profileImg}></div>
+            <img src={userInfo.avatar} className={styles.profileImg}/>
           <div className={styles.userInfo}>
             <h2 style={{ color: "#282829", lineHeight: "35px", margin: "0" }}>
-              Abhishek Som
+              {userInfo.name}
             </h2>
             <pre
               style={{
@@ -34,7 +53,7 @@ function UserProfile() {
                 fontFamily: "helvetica",
               }}
             >
-              1,167 followers     214 following
+              {/* {userInfo.followers.length} followers     {userInfo.following.length} following */}
             </pre>
             <button className={styles.followButton}>
               <FontAwesomeIcon
