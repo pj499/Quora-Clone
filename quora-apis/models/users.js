@@ -24,11 +24,15 @@ const userSchema= new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    followers:[
-        this
+    followers:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
     ],
-    following:[
-        this
+    following:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
     ],
     token:{
         type:String
