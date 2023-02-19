@@ -90,7 +90,8 @@ function App() {
               <Route
                 path="questions"
                 element={
-                  <UserQuestions
+                  <UserQuestions handleIsAddAnswer={handleIsAddAnswer}
+                  handleSelectedQuestion={handleSelectedQuestion}
                   />
                 }
               ></Route>
