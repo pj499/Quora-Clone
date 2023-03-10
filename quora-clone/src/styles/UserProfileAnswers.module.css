@@ -1,0 +1,19 @@
+.userProfileAnswersContainer{
+    width:95%;
+    /* height:50%; */
+    /* border:1px solid red; */
+    margin: auto;
+    margin-top: 30px;
+    background-color: white;
+    box-shadow: 0 0 5px 1px lightgray;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+.userAnswer{
+    width: 100%;
+    text-align: justify;
+    line-height: 21px;
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

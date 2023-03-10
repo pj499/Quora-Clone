@@ -157,6 +157,7 @@ function Navbar(props) {
                 <h3
                   style={{
                     marginTop: "5px",
+                    marginBottom:"0px",
                     fontSize: "18px",
                     lineHeight: "25px",
                     fontWeight: "700",
@@ -165,6 +166,7 @@ function Navbar(props) {
                 >
                   {auth.user.name}
                 </h3>
+                <h5 style={{margin:"0px"}}>{auth.user.email}</h5>
               </div>
               <div className={styles.dropDownItems}>
                 <div className={styles.dropDownItemsItem}>

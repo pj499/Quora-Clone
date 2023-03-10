@@ -5,6 +5,7 @@ import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams, Outlet } from "react-router";
 import { Link, useLocation } from "react-router-dom";
 import { RotatingLines } from "react-loader-spinner";
+import {useAuth} from "../hooks/index"
 
 function UserProfile() {
   const navigate = useNavigate();
@@ -13,6 +14,8 @@ function UserProfile() {
   let parameters = location.pathname.split("/");
   const [userInfo, setUserInfo] = useState({});
   const [isProfileLoading, setIsProfileLoading] = useState(true);
+  const auth = useAuth();
+
 
   const getUserProfileHeaderInfo = async () => {
     const url = `http://localhost:8000/${userId}`;
@@ -32,15 +35,33 @@ function UserProfile() {
     }
   };
 
+  const followUnfollowUser = async ()=>{
+    const url = `http://localhost:8000/followUnfollow`;
+    let dataToSubmit={
+      'whomToFollowUserId':userId,
+      'userId':auth.user.userId
+    }
+    let response = await fetch(url,{
+      method:'POST',
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(dataToSubmit),
+    });
+     
+    if(response.status==200){
+      let response2 = await response.json();
+      setUserInfo(response2.user);  
+    }
+
+  }
+
   useEffect(() => {
     setIsProfileLoading(true);
 
     async function get() {
       await getUserProfileHeaderInfo();
       setIsProfileLoading(false);
-      console.log("ARrayss useEffect", userInfo.followers, userInfo.following);
-      console.log("UserINfo", userInfo);
-      console.log("loading", isProfileLoading);
     }
     get();
   }, []);
@@ -78,7 +99,7 @@ function UserProfile() {
                   {userInfo.followers.length} followers{" "}
                   {userInfo.following.length} following
                 </pre>
-                <button className={styles.followButton}>
+                {userId!=auth.user.userId && <button className={styles.followButton} onClick={followUnfollowUser}>
                   <FontAwesomeIcon
                     icon={faUserPlus}
                     size="sm"
@@ -93,9 +114,9 @@ function UserProfile() {
                       fontFamily: "sans-serif",
                     }}
                   >
-                    Follow
+                  {userInfo.followers.includes(auth.user.userId)? "Following" : "Follow"}
                   </h5>
-                </button>
+                </button>}
               </div>
             </div>
 
