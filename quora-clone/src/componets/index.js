@@ -12,6 +12,7 @@ import UserFollowers from "./UserFollowers";
 import UserFollowing from "./UserFollowing";
 import DisplayQuestion from "./DisplayQuestion";
 import UserProfileAnswers from "./UserProfileAnswers";
+import EachUser from "./EachUser";
 
 export {
     Home,
@@ -27,5 +28,6 @@ export {
     UserFollowers,
     UserFollowing,
     DisplayQuestion,
-    UserProfileAnswers
+    UserProfileAnswers,
+    EachUser
 }

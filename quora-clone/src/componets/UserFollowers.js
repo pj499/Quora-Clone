@@ -1,8 +1,11 @@
 import React from 'react'
+import {EachUser} from './index'
 
 const UserFollowers = () => {
   return (
-    <div>UserFollowers</div>
+    <div>
+      <EachUser/>
+    </div>
   )
 }
 

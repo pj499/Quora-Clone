@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/UserProfile.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faUserPlus,faUserCheck } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams, Outlet } from "react-router";
 import { Link, useLocation } from "react-router-dom";
 import { RotatingLines } from "react-loader-spinner";
@@ -99,11 +99,11 @@ function UserProfile() {
                   {userInfo.followers.length} followers{" "}
                   {userInfo.following.length} following
                 </pre>
-                {userId!=auth.user.userId && <button className={styles.followButton} onClick={followUnfollowUser}>
+                {userId!=auth.user.userId && <button className={!userInfo.followers.includes(auth.user.userId)?styles.followButton:styles.followedButton} onClick={followUnfollowUser}>
                   <FontAwesomeIcon
-                    icon={faUserPlus}
+                    icon={!userInfo.followers.includes(auth.user.userId)?faUserPlus: faUserCheck}
                     size="sm"
-                    color="#DBD9D9"
+                    color={!userInfo.followers.includes(auth.user.userId)?"#DBD9D9":"#1a5aff"}
                     style={{ marginRight: "5px" }}
                   />{" "}
                   <h5

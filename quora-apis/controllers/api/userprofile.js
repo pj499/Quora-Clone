@@ -94,11 +94,9 @@ module.exports.follow = async function(req,res){
       let index = user.following.indexOf(whomToFollowUserId);
       user.following.splice(index,1);
       user.save();
-      console.log('user following:',user.following);
       index = whomToFollowUser.followers.indexOf(userId);
       whomToFollowUser.followers.splice(index,1);
       whomToFollowUser.save();
-      console.log('whomtofollow:',whomToFollowUser.followers);
       return res.status(200).send({
         message:"User unfollowed successfully",
         user:whomToFollowUser
@@ -107,10 +105,8 @@ module.exports.follow = async function(req,res){
       //agar user follow nahi karta toh follow karege
       user.following.push(whomToFollowUserId);
       user.save();
-      console.log('user following:',user.following);
       whomToFollowUser.followers.push(userId);
       whomToFollowUser.save();
-      console.log('whomtofollow:',whomToFollowUser.followers);
       return res.status(200).send({
         message:"User followed successfully",
         user:whomToFollowUser
@@ -122,6 +118,29 @@ module.exports.follow = async function(req,res){
     console.log("Error in fetching follow: ", error);
     return res.status(409).json({
       message: "Error in follow",
+    });
+  }
+}
+
+module.exports.fetchUserFollowers = async function(req,res){
+  try {
+    let userId = req.params.userId;
+    let userDetails = await User.findById(userId);
+    let userFollowers = userDetails.followers;
+    let userFollowersInfo=[];
+    for(let userFollower of userFollowers){
+      let userFollowerDetail = await User.findById(userFollower);
+      userFollowersInfo.push(userFollowerDetail); 
+    }
+    console.log("userFollowerInfo: ",userFollowersInfo);
+    return res.status(200).send({
+      message:"User follower fetched successful!",
+      userFollowerDetails:userFollowersInfo
+    });
+  } catch (error) {
+    console.log("Error in fetching userFollowers: ", error);
+    return res.status(409).json({
+      message: "Error in fetching userFollowers",
     });
   }
 }
