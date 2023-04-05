@@ -132,7 +132,6 @@ module.exports.fetchUserFollowers = async function(req,res){
       let userFollowerDetail = await User.findById(userFollower);
       userFollowersInfo.push(userFollowerDetail); 
     }
-    console.log("userFollowerInfo: ",userFollowersInfo);
     return res.status(200).send({
       message:"User follower fetched successful!",
       userFollowerDetails:userFollowersInfo
@@ -141,6 +140,28 @@ module.exports.fetchUserFollowers = async function(req,res){
     console.log("Error in fetching userFollowers: ", error);
     return res.status(409).json({
       message: "Error in fetching userFollowers",
+    });
+  }
+}
+
+module.exports.fetchUserFollowing = async function(req,res){
+  try {
+    let userId = req.params.userId;
+    let userDetails = await User.findById(userId);
+    let userFollowing = userDetails.following;
+    let userFollowingInfo=[];
+    for(let userFollower of userFollowing){
+      let userFollowerDetail = await User.findById(userFollower);
+      userFollowingInfo.push(userFollowerDetail); 
+    }
+    return res.status(200).send({
+      message:"User following fetched successful!",
+      userFollowerDetails:userFollowingInfo
+    });
+  } catch (error) {
+    console.log("Error in fetching userFollowing: ", error);
+    return res.status(409).json({
+      message: "Error in fetching userFollowing",
     });
   }
 }

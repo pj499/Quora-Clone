@@ -97,7 +97,7 @@ function App() {
               ></Route>
               <Route path="answers" element={<UserAnswers />}></Route>
               <Route path="followers" element={<UserFollowers />}></Route>
-              <Route path="following" element={<UserFollowing />}></Route>
+              <Route path="following" element={<UserFollowers />}></Route>
             </Route>
 
             <Route

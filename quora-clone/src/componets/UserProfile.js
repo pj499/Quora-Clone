@@ -6,14 +6,19 @@ import { useNavigate, useParams, Outlet } from "react-router";
 import { Link, useLocation } from "react-router-dom";
 import { RotatingLines } from "react-loader-spinner";
 import {useAuth} from "../hooks/index"
+import { useRef } from "react";
 
 function UserProfile() {
   const navigate = useNavigate();
   let { userId } = useParams();
+  
+  
   let location = useLocation();
   let parameters = location.pathname.split("/");
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo,setUserInfo] = useState({});
+  
   const [isProfileLoading, setIsProfileLoading] = useState(true);
+
   const auth = useAuth();
 
 
@@ -30,6 +35,7 @@ function UserProfile() {
     console.log("getUserProfileHeaderInfo", response2.data.user);
     if (response.status === 200) {
       setUserInfo(response2.data.user);
+      
     }
     if (response.status === 409) {
     }
@@ -51,7 +57,8 @@ function UserProfile() {
      
     if(response.status==200){
       let response2 = await response.json();
-      setUserInfo(response2.user);  
+      setUserInfo(response2.user); 
+      // window.location.reload();
     }
 
   }
@@ -64,7 +71,7 @@ function UserProfile() {
       setIsProfileLoading(false);
     }
     get();
-  }, []);
+  },[location]);
 
   return (
     <>
@@ -144,7 +151,7 @@ function UserProfile() {
                 <h5 style={{ margin: "0" }}>Answers</h5>
               </Link>
               <Link
-                to={`/userProfile/${userId}/followers`}
+                to={{pathname:`/userProfile/${userId}/followers` ,state:{userInfo}}}
                 className={styles.eachUserActivity}
                 style={{
                   borderBottom:

@@ -44,5 +44,6 @@ router.get('/:userId/userProfileQuestions', userprofile.fetchUserProfileQuestion
 router.get('/:userId/userProfileAnswers', userprofile.fetchUserAnswers)
 router.post('/followUnfollow',userprofile.follow);
 router.get('/:userId/followers',userprofile.fetchUserFollowers);
+router.get('/:userId/following',userprofile.fetchUserFollowing);
 
 module.exports= router;

@@ -1,5 +1,5 @@
 .eachUserContainer{
-    width: 100%;
+    width: 90%;
     height:80px;
     /* border-top: 0.5px solid lightgray; */
     border-bottom: 0.5px solid lightgray;
@@ -9,7 +9,7 @@
 }
 .userInfo{
     height: 100%;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -19,18 +19,40 @@
 .userImg{
     width:50px;
     height: 50px;
-    border: 1px solid green;
+    /* border: 1px solid green; */
     border-radius: 25px;
 }
 
 .userDetails{
     height:100%;
-    border: 1px solid pink;
+    /* border: 1px solid pink; */
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
     justify-content: center;
 }
-.followUnfollow{
+.followUnFollow{
+    width: 120px;
+    height: 40px;
+    border-radius: 20px;
+    border-color: #1a5aff;
+    outline: none;
+    background-color: white;
+    color: #1a5aff;
+    cursor: pointer;
+}
 
+
+.userImage{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.userName{
+    cursor: pointer;
+}
+
+.userName:hover{
+    text-decoration: underline;
 }
